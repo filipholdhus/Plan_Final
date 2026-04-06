@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filip · Sesongplan 2026</title>
+<style>
+:root{
+  --purple:#7F77DD;--purple-bg:#EEEDFE;--purple-text:#3C3489;
+  --green:#10B981;--green-bg:#EAF3DE;--green-text:#1D6B42;
+  --red:#EF4444;--red-bg:#FEE2E2;--red-text:#991B1B;
+  --amber:#F59E0B;--amber-bg:#FAEEDA;--amber-text:#633806;
+  --blue-bg:#E6F1FB;--blue-text:#0C447C;
+  --gray-bg:#F1EFE8;--gray-text:#5F5E5A;
+  --bg:#f8f7f4;--bg2:#ffffff;--bg3:#f1f0eb;
+  --text:#1a1a18;--text2:#6b6a65;--text3:#9c9a93;
+  --border:rgba(0,0,0,.10);--border2:rgba(0,0,0,.18);
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#1a1917;--bg2:#242320;--bg3:#2c2b28;
+  --text:#e8e6df;--text2:#9c9a93;--text3:#6b6a65;
+  --border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.18);
+}}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;color:var(--text);background:var(--bg);min-height:100vh;}
+b{font-weight:600;}i{font-style:italic;}s{opacity:.5;}
+a{color:var(--purple);text-decoration:none;}
+
+/* layout */
+.app{max-width:1100px;margin:0 auto;padding:12px 12px 60px;}
+
+/* nav */
+.nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:18px;}
+.nav-info{flex:1;min-width:160px;}
+.nav-title{font-size:17px;font-weight:700;letter-spacing:-.02em;}
+.nav-sub{font-size:12px;color:var(--text2);margin-top:2px;}
+.tab{font-size:12px;padding:6px 14px;border:0.5px solid var(--border2);border-radius:20px;cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.tab.on{background:var(--text);color:var(--bg);border-color:var(--text);}
+.tab:hover:not(.on){background:var(--bg3);}
+
+/* views */
+.view{display:none;}.view.on{display:block;}
+
+/* cards */
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+.card-h{padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:0.5px solid var(--border);}
+.ch-purple{background:var(--purple-bg);color:var(--purple-text);}
+.ch-green{background:var(--green-bg);color:var(--green-text);}
+.ch-gray{background:var(--gray-bg);color:var(--gray-text);}
+.card-b{padding:12px 14px;}
+
+/* phase tags */
+.ptag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:8px;}
+.pt-rehab{background:#FAECE7;color:#712B13;}
+.pt-bygg{background:var(--blue-bg);color:var(--blue-text);}
+.pt-fart{background:var(--purple-bg);color:var(--purple-text);}
+.pt-peak{background:var(--amber-bg);color:var(--amber-text);}
+.pt-comp{background:var(--green-bg);color:var(--green-text);}
+.pt-reload{background:var(--gray-bg);color:var(--gray-text);}
+
+/* training blocks */
+.tblk{margin-bottom:8px;padding:8px 10px;border-radius:6px;font-size:12px;line-height:1.7;}
+.tblk-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;color:var(--text2);}
+.tb-fart{background:#F5F3FF;border-left:3px solid #7F77DD;}
+.tb-blokk{background:#ECFDF5;border-left:3px solid #10B981;}
+.tb-styrke{background:#EFF6FF;border-left:3px solid #3B82F6;}
+.tb-mob{background:#F5F0FF;border-left:3px solid #8B5CF6;}
+.tb-rytme{background:#F0FDF4;border-left:3px solid #22C55E;}
+.tb-kvile{background:var(--bg3);border-left:3px solid #9CA3AF;}
+.tb-stevne{background:var(--red-bg);border-left:3px solid #EF4444;}
+@media(prefers-color-scheme:dark){
+  .tb-fart{background:#1e1a3a;}.tb-blokk{background:#0a2a1e;}
+  .tb-styrke{background:#0f1e30;}.tb-mob{background:#1a0f30;}
+  .tb-rytme{background:#0a2010;}.tb-stevne{background:#2a0f0f;}
+}
+
+/* meal blocks */
+.mblk{margin-bottom:6px;font-size:12px;line-height:1.6;}
+.mt{font-size:10px;font-weight:700;color:var(--text2);display:block;margin-bottom:1px;}
+.mn{font-weight:600;display:block;}
+.md{color:var(--text2);font-size:11px;line-height:1.5;}
+.msup{font-size:10px;color:#6D28D9;background:#EDE9FE;border-radius:3px;padding:2px 6px;display:inline-block;margin-top:3px;}
+@media(prefers-color-scheme:dark){.msup{background:#2d1f50;color:#c4b5fd;}}
+.mdiv{border-top:0.5px solid var(--border);margin:7px 0;}
+
+/* macro bar */
+.macros{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0 2px;border-top:0.5px solid var(--border);margin-top:8px;}
+.mac{font-size:11px;padding:2px 8px;border-radius:10px;}
+.mac-p{background:#FFF0E0;color:#C25A00;}
+.mac-k{background:#E0EEFF;color:#0A4A80;}
+.mac-f{background:#E0F5E9;color:#1D6B42;}
+.mac-c{background:var(--gray-bg);color:var(--gray-text);}
+@media(prefers-color-scheme:dark){
+  .mac-p{background:#3a1800;color:#FF9A50;}
+  .mac-k{background:#001a3a;color:#5AABFF;}
+  .mac-f{background:#001a0d;color:#50CC80;}
+}
+
+/* today grid */
+.today-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:640px){.today-grid{grid-template-columns:1fr;}}
+
+/* week plan */
+.wk-nav{display:flex;gap:8px;align-items:center;margin-bottom:12px;}
+.wk-btn{font-size:12px;padding:6px 14px;border:0.5px solid var(--border2);border-radius:6px;cursor:pointer;background:var(--bg2);color:var(--text);}
+.wk-btn:hover{background:var(--bg3);}
+.wk-lbl{font-size:13px;font-weight:700;flex:1;text-align:center;}
+.wk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+@media(max-width:900px){.wk-grid{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:500px){.wk-grid{grid-template-columns:repeat(2,1fr);}}
+.dc{background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:box-shadow .15s;}
+.dc:hover{box-shadow:0 3px 10px rgba(0,0,0,.12);}
+.dc.today{border-color:var(--purple);border-width:2px;}
+.dc.logged{border-color:var(--green);border-width:2px;}
+.dc.race{border-color:var(--red);border-width:2px;}
+.dc-h{padding:6px 8px;font-size:10px;font-weight:700;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;letter-spacing:.04em;}
+.dc-date{font-size:10px;color:var(--text2);font-weight:400;}
+.dc-b{padding:6px 8px;font-size:11px;line-height:1.5;color:var(--text2);}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;flex-shrink:0;}
+.dot-t{background:var(--purple);}.dot-s{background:#3B82F6;}.dot-k{background:#9CA3AF;}.dot-r{background:#EF4444;}
+
+/* kost grid */
+.kost-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:10px;}
+.kost-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
+.kost-h{padding:9px 13px;font-size:12px;font-weight:700;border-bottom:0.5px solid var(--border);}
+.kd-man{background:var(--blue-bg);color:var(--blue-text);}
+.kd-tys{background:var(--purple-bg);color:var(--purple-text);}
+.kd-ons{background:#D4EAFF;color:#0A4A80;}
+.kd-tor{background:var(--amber-bg);color:var(--amber-text);}
+.kd-fre{background:#F0EEF8;color:#4A3580;}
+.kd-lor{background:var(--green-bg);color:var(--green-text);}
+.kd-son{background:var(--gray-bg);color:var(--gray-text);}
+.kost-b{padding:10px 13px;}
+
+/* suppl note */
+.suppl-box{background:var(--bg3);border-radius:8px;padding:10px 12px;margin-top:14px;font-size:11px;line-height:1.8;}
+.suppl-row{display:flex;gap:8px;padding:3px 0;border-bottom:0.5px solid var(--border);font-size:11px;}
+.suppl-row:last-child{border-bottom:none;}
+.suppl-t{font-weight:700;color:#6D28D9;min-width:150px;}
+
+/* log form */
+.lf{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;max-width:620px;}
+.fg{margin-bottom:11px;}
+.fl{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px;}
+.fi{width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text);font-size:13px;font-family:inherit;}
+.fi:focus{outline:none;border-color:var(--purple);}
+textarea.fi{resize:vertical;min-height:54px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;}
+@media(max-width:520px){.g4{grid-template-columns:1fr 1fr;}}
+
+/* log history */
+.le{background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;max-width:620px;}
+.le-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.le-date{font-size:13px;font-weight:700;}
+.le-del{font-size:11px;color:var(--text3);cursor:pointer;border:none;background:none;padding:2px 6px;border-radius:4px;}
+.le-del:hover{background:var(--red-bg);color:var(--red-text);}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;}
+.badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.rec-g{background:var(--green-bg);color:var(--green-text);}
+.rec-y{background:var(--amber-bg);color:var(--amber-text);}
+.rec-r{background:var(--red-bg);color:var(--red-text);}
+.rec-x{background:var(--gray-bg);color:var(--gray-text);}
+.le-detail{font-size:11px;color:var(--text2);line-height:1.7;}
+.le-detail b{color:var(--text);}
+
+/* AI chat */
+.ai-setup{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:20px;max-width:440px;}
+.ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 180px);min-height:380px;background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.ai-msg{max-width:88%;padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.ai-u{align-self:flex-end;background:var(--purple);color:#fff;border-bottom-right-radius:3px;}
+.ai-a{align-self:flex-start;background:var(--bg3);color:var(--text);border-bottom-left-radius:3px;}
+.ai-loading{align-self:flex-start;background:var(--bg3);color:var(--text2);font-style:italic;border-bottom-left-radius:3px;}
+.ai-in{display:flex;gap:8px;padding:10px 12px;border-top:0.5px solid var(--border);}
+.ai-ta{flex:1;padding:8px 10px;border:0.5px solid var(--border2);border-radius:8px;background:var(--bg3);color:var(--text);font-size:13px;font-family:inherit;resize:none;height:42px;max-height:120px;}
+.ai-ta:focus{outline:none;border-color:var(--purple);}
+.ai-send{padding:8px 16px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;}
+.ai-send:hover{opacity:.88;}.ai-send:disabled{opacity:.5;cursor:not-allowed;}
+
+/* settings */
+.sc{background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;max-width:520px;}
+.sc-h{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);margin-bottom:10px;}
+.sc-note{font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.6;}
+.brow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.ks{font-size:12px;background:var(--bg3);padding:6px 10px;border-radius:6px;margin-bottom:8px;}
+
+/* buttons */
+.btn{padding:8px 18px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;}
+.btn-dark{background:var(--text);color:var(--bg);}
+.btn-dark:hover{opacity:.85;}
+.btn-sec{background:var(--bg3);color:var(--text);border:0.5px solid var(--border2);}
+.btn-sec:hover{background:var(--border2);}
+.btn-red{background:var(--red-bg);color:var(--red-text);border:1px solid #FCA5A5;}
+
+/* modal */
+.moverlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;}
+.moverlay.on{display:flex;}
+.mbox{background:var(--bg2);border-radius:14px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.mtitle{font-size:16px;font-weight:700;}
+.mclose{font-size:20px;cursor:pointer;color:var(--text2);background:none;border:none;padding:2px 6px;border-radius:4px;line-height:1;}
+.mclose:hover{background:var(--bg3);}
+.msec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);margin:14px 0 6px;}
+
+/* misc */
+.empty{text-align:center;padding:28px;color:var(--text2);font-size:12px;}
+.sh{font-size:13px;font-weight:700;margin-bottom:12px;}
+.msg-ok{font-size:12px;color:var(--green-text);margin-left:10px;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-info">
+    <div class="nav-title">Filip · Sesongplan 2026</div>
+    <div class="nav-sub" id="navSub"></div>
+  </div>
+  <button class="tab on"  data-v="today"    onclick="nav(this)">I dag</button>
+  <button class="tab"     data-v="plan"     onclick="nav(this)">Sesongplan</button>
+  <button class="tab"     data-v="kost"     onclick="nav(this)">Kostplan</button>
+  <button class="tab"     data-v="logg"     onclick="nav(this)">Logg</button>
+  <button class="tab"     data-v="ai"       onclick="nav(this)">AI-coach</button>
+  <button class="tab"     data-v="settings" onclick="nav(this)">⚙️</button>
+</div>
+
+<!-- I DAG -->
+<div class="view on" id="v-today">
+  <div class="today-grid">
+    <div class="card">
+      <div class="card-h ch-purple" id="tdTrainH">Dagens trening</div>
+      <div class="card-b" id="tdTrainB"></div>
+    </div>
+    <div class="card">
+      <div class="card-h ch-green">Dagens kostplan</div>
+      <div class="card-b" id="tdKostB"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SESONGPLAN -->
+<div class="view" id="v-plan">
+  <div class="wk-nav">
+    <button class="wk-btn" onclick="prevWeek()">← Forrige</button>
+    <div class="wk-lbl" id="wkLbl"></div>
+    <button class="wk-btn" onclick="nextWeek()">Neste →</button>
+  </div>
+  <div class="wk-grid" id="wkGrid"></div>
+</div>
+
+<!-- KOSTPLAN -->
+<div class="view" id="v-kost">
+  <div class="kost-grid" id="kostGrid"></div>
+  <div class="suppl-box" style="max-width:620px">
+    <div style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text)">Kosttilskot — timing</div>
+    <div class="suppl-row"><span class="suppl-t">Morgon til frukost</span><span>Kalsium · Omega-3 · Folsyre · D-vitamin — aldri saman med jern</span></div>
+    <div class="suppl-row"><span class="suppl-t">30–60 min før trening</span><span>C-vitamin — kollagensyntese under belastning</span></div>
+    <div class="suppl-row"><span class="suppl-t">Kveld åleine</span><span>Magnesium + Jern + lita dose C-vitamin — aldri kalsium saman med jern/magnesium</span></div>
+  </div>
+</div>
+
+<!-- LOGG -->
+<div class="view" id="v-logg">
+  <div class="sh">Treningslogg</div>
+  <div class="lf">
+    <div class="fg">
+      <label class="fl">Dato</label>
+      <input class="fi" type="date" id="lf-date">
+    </div>
+    <div class="fg">
+      <label class="fl">Biometriske verdiar</label>
+      <div class="g4">
+        <div><label class="fl" style="font-size:10px">HRV</label><input class="fi" type="number" id="lf-hrv" placeholder="58"></div>
+        <div><label class="fl" style="font-size:10px">Recovery %</label><input class="fi" type="number" id="lf-rec" placeholder="76" min="0" max="100"></div>
+        <div><label class="fl" style="font-size:10px">Søvn (t)</label><input class="fi" type="number" id="lf-sovn" placeholder="8.0" step="0.5"></div>
+        <div><label class="fl" style="font-size:10px">Søvnkv. %</label><input class="fi" type="number" id="lf-sovnk" placeholder="80" min="0" max="100"></div>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Kva blei gjort</label><textarea class="fi" id="lf-gjort" placeholder="Fartøkt: 3×flying 30m&#10;Løp 1: 3.05 · Løp 2: 3.04 · Løp 3: 3.02"></textarea></div>
+    <div class="fg"><label class="fl">Tider og resultat</label><textarea class="fi" id="lf-tider" placeholder="100m: 10.98 (+0.8 m/s)"></textarea></div>
+    <div class="fg"><label class="fl">Kropp og kjensle</label><textarea class="fi" id="lf-kropp" placeholder="Kjentes bra. Litt stiv hamstring etter oppvarming..."></textarea></div>
+    <div class="fg"><label class="fl">Mat (avvik frå plan)</label><textarea class="fi" id="lf-mat" placeholder="Følgde planen. Ekstra banan pre-trening."></textarea></div>
+    <button class="btn btn-dark" onclick="saveLog()">Lagre logg</button>
+    <span class="msg-ok" id="lf-ok" style="display:none">Lagra ✓</span>
+  </div>
+  <div class="sh">Historikk</div>
+  <div id="logHistory"></div>
+</div>
+
+<!-- AI-COACH -->
+<div class="view" id="v-ai">
+  <div id="aiSetup" style="display:none">
+    <div class="ai-setup">
+      <div class="sh">Legg inn Claude API-nøkkel</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Nøkkelen lagrast i nettlesaren din (localStorage) — aldri i koden.</p>
+      <input class="fi" type="password" id="aiKeyIn" placeholder="sk-ant-api03-...">
+      <div style="margin-top:10px"><button class="btn btn-dark" onclick="saveKeyAndInit()">Lagre og start</button></div>
+    </div>
+  </div>
+  <div id="aiChat" style="display:none">
+    <div class="ai-wrap">
+      <div class="ai-msgs" id="aiMsgs"></div>
+      <div class="ai-in">
+        <textarea class="ai-ta" id="aiIn" placeholder="Spør om trening, form, kosthold... (Enter = send, Shift+Enter = ny linje)"></textarea>
+        <button class="ai-send" id="aiSendBtn" onclick="sendAI()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INNSTILLINGAR -->
+<div class="view" id="v-settings">
+  <div class="sh">Innstillingar</div>
+
+  <div class="sc">
+    <div class="sc-h">Claude API-nøkkel</div>
+    <div class="ks" id="ksStatus">Ingen nøkkel lagra</div>
+    <input class="fi" type="password" id="ksIn" placeholder="sk-ant-api03-...">
+    <div class="brow">
+      <button class="btn btn-dark" onclick="saveKeySettings()">Lagre nøkkel</button>
+      <button class="btn btn-red" onclick="deleteKeySettings()">Slett nøkkel</button>
+    </div>
+  </div>
+
+  <div class="sc">
+    <div class="sc-h">Logg-backup</div>
+    <p class="sc-note">Eksporter alle loggar som JSON, eller importer frå backup-fil.</p>
+    <div class="brow">
+      <button class="btn btn-sec" onclick="exportLogs()">Eksporter JSON</button>
+      <button class="btn btn-sec" onclick="document.getElementById('importFile').click()">Importer logg-JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importLogs(event)">
+    </div>
+    <div style="margin-top:10px">
+      <p class="sc-note">Importer data frå Sjurlog (lagrast separat).</p>
+      <button class="btn btn-sec" onclick="document.getElementById('importSjur').click()">Importer Sjurlog JSON</button>
+      <input type="file" id="importSjur" accept=".json" style="display:none" onchange="importSjurlog(event)">
+    </div>
+    <div id="importMsg" style="font-size:12px;color:var(--green-text);margin-top:8px;display:none"></div>
+  </div>
+
+  <div class="sc">
+    <div class="sc-h">Farlege val</div>
+    <p class="sc-note">Sletting kan ikkje angrast.</p>
+    <div class="brow">
+      <button class="btn btn-red" onclick="deleteAllLogs()">Slett alle loggar</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /.app -->
+
+<!-- MODAL -->
+<div class="moverlay" id="modal" onclick="closeModalBg(event)">
+  <div class="mbox">
+    <div class="mhead">
+      <div class="mtitle" id="mTitle"></div>
+      <button class="mclose" onclick="closeModal()">✕</button>
+    </div>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONSTANTS
+// ============================================================
+const DNS = ['Søn','Man','Tys','Ons','Tor','Fre','Lør'];
+const DLONG = ['Søndag','Måndag','Tysdag','Onsdag','Torsdag','Fredag','Laurdag'];
+const MN = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember'];
+const MS = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
+
+const PHASES = [
+  {s:'2026-03-30',e:'2026-04-07',n:'Leir Nerja',t:'pt-rehab'},
+  {s:'2026-04-08',e:'2026-04-12',n:'Landing',t:'pt-bygg'},
+  {s:'2026-04-13',e:'2026-04-26',n:'Gjenoppbygging',t:'pt-bygg'},
+  {s:'2026-04-27',e:'2026-05-04',n:'Fartsutvikling',t:'pt-fart'},
+  {s:'2026-05-05',e:'2026-05-17',n:'Fartsutvikling + kamel',t:'pt-fart'},
+  {s:'2026-05-18',e:'2026-05-28',n:'Peaking TMG',t:'pt-peak'},
+  {s:'2026-05-29',e:'2026-07-13',n:'Stevneperiode',t:'pt-comp'},
+  {s:'2026-07-14',e:'2026-07-18',n:'Reload',t:'pt-reload'},
+  {s:'2026-07-19',e:'2026-07-25',n:'NM-peaking',t:'pt-peak'},
+  {s:'2026-07-26',e:'2026-08-09',n:'Reload',t:'pt-reload'},
+  {s:'2026-08-10',e:'2026-08-30',n:'Jr. NM-peaking',t:'pt-peak'},
+  // OFFSEASON 31. aug – ca. 14. sep: restitusjon og mental pause.
+  // RESSURSPERIODE startar ca. 15. sep. Ikkje aktiv enno — aktiver når klar.
+];
+
+const RACES = {
+  '2026-05-28':{lbl:'🏁 TMG Bergen — 100m',info:'Sesongopnar. Løp teknisk og rytmisk.'},
+  '2026-06-05':{lbl:'🏁 Framo-lekene Bergen',info:'400m + 200m. Prioriter 400m — viktig kapasitetsreferanse.'},
+  '2026-06-20':{lbl:'🏁 Lillehammerlekene',info:'100m + 200m. Første dobbel i sesongen.'},
+  '2026-06-24':{lbl:'🏁 Boysen Memorial Bislett',info:'200m. To dagar etter Lillehammer — spar energi.'},
+  '2026-07-08':{lbl:'🏁 Joensuu Finland',info:'200m.'},
+  '2026-07-12':{lbl:'🏁 Tampere Finland',info:'100m. Fire dagar etter Joensuu.'},
+  '2026-07-23':{lbl:'🏆 NM Trondheim',info:'100m + 200m. HOVUDMÅL #1. (23.–25. juli)'},
+  '2026-08-22':{lbl:'🏁 NM Stafetter Moelven',info:'4×100m.'},
+  '2026-08-23':{lbl:'🏁 Mjøssprinten',info:'100m/200m. Avgjer fredag 21/8 etter forma.'},
+  '2026-08-28':{lbl:'🏆 Jr. NM Oslo',info:'100m + 200m. HOVUDMÅL #2. (28.–30. aug)'},
+};
+
+const MACROS = {
+  1:{p:185,k:270,f:55,kc:2380},
+  2:{p:210,k:310,f:52,kc:2540},
+  3:{p:178,k:270,f:52,kc:2310},
+  4:{p:205,k:305,f:50,kc:2510},
+  5:{p:185,k:280,f:62,kc:2480},
+  6:{p:215,k:310,f:58,kc:2620},
+  0:{p:180,k:255,f:52,kc:2220},
+};
+
+// Meals: keyed by weekday (0=sun..6=sat)
+const MEALS = {
+  1:{hc:'kd-man',lbl:'Måndag — Kyllingwok',items:[
+    {t:'07:00',n:'Havregraut + egg + bær',d:'100g havre, 3 egg røregg, 100g bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'10:00',n:'Skyr + grovbrød',d:'200g skyr naturell, 1–2 skiver grovbrød, agurk/tomat'},
+    {t:'12:30',n:'Kylling + ris + brokkoli',d:'180g kylling, 200g ris, brokkoli, sitron og krydder'},
+    {t:'15:30',n:'Banan + skyr',d:'1 banan, 150g skyr naturell'},
+    {t:'17:00',n:'🍜 Kyllingwok',d:'180g kylling, paprika, løk, soyasaus, ingefær, kvitlauk, 150g nudlar',s:'C-vitamin 30 min før trening'},
+    {t:'21:00',n:'Skyr + bær',d:'200g skyr naturell, 100g bær',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+  2:{hc:'kd-tys',lbl:'Tysdag — Pasta bolognese',items:[
+    {t:'07:00',n:'Havregraut + egg + bær — stor',d:'120g havre, 3 egg røregg, 100g bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'10:00',n:'Grovbrød + kylling',d:'2 skiver grovbrød, 100g kylling, tomat'},
+    {t:'12:00',n:'Ris + kylling — stor',d:'200g kylling, 220g ris, paprika/brokkoli'},
+    {t:'15:00',n:'Skyr + banan',d:'200g skyr naturell, 1–2 banan'},
+    {t:'17:00',n:'🍝 Pasta bolognese',d:'180g kjøttdeig storfe, 180g pasta, tomatsaus, spinat',s:'C-vitamin 30 min før trening'},
+    {t:'~20:30',n:'Restitusjon etter trening',d:'200g skyr + 1 banan — innan 30 min'},
+    {t:'21:15',n:'Gresk yogurt vanilje + bær',d:'150g gresk yogurt vanilje, bær',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+  3:{hc:'kd-ons',lbl:'Onsdag — Kyllinggryte',items:[
+    {t:'07:30',n:'Havregraut + skyr',d:'100g havre, 150g skyr rørt inn, bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'10:00',n:'Gresk yogurt vanilje + frukt',d:'200g gresk yogurt vanilje, 1 banan, litt granola'},
+    {t:'12:30',n:'Kylling + søtpotet + grønt',d:'180g kylling, 220g søtpotet, spinat'},
+    {t:'15:30',n:'Skyr + grovbrød',d:'200g skyr naturell, 1 skive grovbrød'},
+    {t:'17:00',n:'🍲 Kyllinggryte',d:'200g kyllinglår, kokosmelk/tomatsaus, curry, 180g ris, spinat',s:'C-vitamin 30 min før trening'},
+    {t:'20:30',n:'Skyr + bær',d:'200g skyr naturell, bær',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+  4:{hc:'kd-tor',lbl:'Torsdag — Biff med potet',items:[
+    {t:'07:00',n:'Havregraut + egg + bær',d:'120g havre, 3 egg røregg, bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'10:00',n:'Skyr + grovbrød',d:'200g skyr naturell, 1–2 skiver grovbrød, tomat'},
+    {t:'12:00',n:'Kylling + ris — stor',d:'200g kylling, 220g ris, brokkoli/paprika'},
+    {t:'15:00',n:'Banan + skyr',d:'1–2 banan, 150g skyr naturell'},
+    {t:'17:00',n:'🥩 Biff med potet',d:'180g biff, 250g potet, lett brunsaus, brokkoli',s:'C-vitamin 30 min før trening'},
+    {t:'~20:30',n:'Restitusjon etter trening',d:'200g skyr + 1 banan — innan 30 min'},
+    {t:'21:15',n:'Gresk yogurt vanilje',d:'150g gresk yogurt vanilje',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+  5:{hc:'kd-fre',lbl:'Fredag — 🌮 Taco',items:[
+    {t:'07:30',n:'Egg + havregraut',d:'3–4 egg omelett med spinat, 80g havre, bær',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'10:00',n:'Skyr + bær + banan',d:'200g skyr naturell, 100g bær, 1 banan'},
+    {t:'12:30',n:'Kylling + ris + grønt',d:'180g kylling, 180g ris, grønt rikelig'},
+    {t:'15:30',n:'Skyr + grovbrød',d:'200g skyr naturell, 1 skive'},
+    {t:'18:00',n:'🌮 Taco (alltid fredag)',d:'4–5 mjuke tortilla, 200g kylling m/tacokrydder, salsa, rømme, ost, salat/tomat/paprika'},
+    {t:'21:00',n:'Skyr naturell',d:'200g skyr naturell',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+  6:{hc:'kd-lor',lbl:'Laurdag — 🥩 Biff',items:[
+    {t:'07:30',n:'Havregraut + egg + bær — stor',d:'120g havre, 3 egg røregg, 100g bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'09:30',n:'Banan + skyr (pre-trening)',d:'1–2 banan, 150g skyr naturell',s:'C-vitamin 30 min før (kl 10:30)'},
+    {t:'~13:00',n:'Restitusjon etter trening',d:'200g skyr + 1 banan — innan 30 min'},
+    {t:'14:00',n:'Stor restitusjonslunsj',d:'200g kylling, 200g ris, brokkoli/grønt'},
+    {t:'16:30',n:'Gresk yogurt vanilje + frukt',d:'200g gresk yogurt vanilje, 1 banan'},
+    {t:'19:00',n:'🥩 Biff (alltid laurdag)',d:'220g biff, 280g potet, brunsaus, brokkoli/grønt'},
+    {t:'21:00',n:'Skyr + bær',d:'200g skyr naturell, bær',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+  0:{hc:'kd-son',lbl:'Søndag — Kvile',dynamic:true,items:[
+    {t:'08:30',n:'Egg + havregraut',d:'3 egg røregg, 80g havre, bær',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
+    {t:'11:00',n:'Skyr + banan',d:'200g skyr naturell, 1 banan'},
+    {t:'13:30',n:'Kylling + potet + grønt',d:'180g kylling, 200g potet, brokkoli/spinat'},
+    {t:'16:00',n:'Gresk yogurt vanilje + frukt',d:'200g gresk yogurt vanilje, 1 eple/banan'},
+    {t:'18:30',n:'MIDDAG',d:'__DYNAMIC__',dynamic:true},
+    {t:'20:30',n:'Skyr naturell',d:'200g skyr naturell',s:'Magnesium · Jern · C-vitamin'},
+  ]},
+};
+
+// ============================================================
+// DATE HELPERS
+// ============================================================
+function toDS(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function parseDS(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
+function getMonday(d){const day=d.getDay();const diff=day===0?-6:1-day;return new Date(d.getFullYear(),d.getMonth(),d.getDate()+diff)}
+function getSundayType(d){const jan1=new Date(d.getFullYear(),0,1);const wk=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);return wk%2===1?'tandori':'kjottkaker'}
+
+function fmtFull(d){return `${DLONG[d.getDay()]} ${d.getDate()}. ${MN[d.getMonth()]} ${d.getFullYear()}`}
+function fmtShort(d){return `${d.getDate()}. ${MS[d.getMonth()]}`}
+function getPhase(ds){return PHASES.find(p=>ds>=p.s&&ds<=p.e)||null}
+
+// ============================================================
+// TRAINING LOGIC
+// ============================================================
+function getStrengthSets(ds){
+  if(ds<'2026-04-20') return null;
+  if(ds<='2026-04-26') return {sets:'3×5',note:'Intro — lett, kjenn øvingane'};
+  if(ds<='2026-05-04') return {sets:'4×5',note:'Bygg — auke vekt gradvis'};
+  if(ds<='2026-05-17') return {sets:'4×6',note:'Topp — tyngste periode'};
+  if(ds<='2026-06-07') return {sets:'3×4–5',note:'Ned volum — hald eksplosivt'};
+  return {sets:'2×3–4',note:'Vedlikehald — berre eksplosivt'};
+}
+
+function getTrainInfo(dow, ds){
+  const kamel = ds>='2026-05-05';
+  const tau   = ds<'2026-05-18';
+  const sp    = getStrengthSets(ds);
+
+  const M = {
+    0:{type:'kvile',short:'Kvile',dot:'dot-k',blocks:[
+      {cls:'tb-kvile',lbl:'Kvile',html:'Fullstendig kvile. Restitusjon og mental avkopling.'}
+    ]},
+    1:{type:'styrke',short:'Core + overkropp',dot:'dot-s',blocks:[
+      {cls:'tb-styrke',lbl:'Core + overkropp (18:30–20:00)',html:
+        '<b>Overkropp:</b> Dips 3×6–8 · Benkpress/skråbenk 3×5 · Skulderpress 2×8<br>'+
+        '<b>Core A (odde veker):</b> Pallof press 3×8 · Medisinball rotasjon 3×8 · Russian twist 3×10<br>'+
+        '<b>Core B (partalsveker):</b> Dead bug 3×8 · Farmers carry 2×20m · Hollow body 3×20 sek'},
+      {cls:'tb-mob',lbl:'Mobilitet etterpå (15 min)',html:
+        '90/90 hofterotasjon 5 min · Hip CARs 5 reps · Couch stretch 2 min · Pigeon pose 90 sek · Glute-bridge 3 sek pause 2×10'}
+    ]},
+    2:{type:'trening',short:'Flying 30m'+(kamel?' + kamel':''),dot:'dot-t',blocks:[
+      {cls:'tb-fart',lbl:'Fartøkt (18:30–20:30)',html:
+        '<b>Flying 30m:</b> 3–4 reps frå 30m innløp, nær maks. Pause 8–9 min.<br><br>'+
+        (kamel
+          ? '<b>Kamel (maks 2 reps alltid):</b> 15m aks + 20m flyt + 20m reaktivering. Pause 10 min mellom reps. Fokus: kjenn flytfasen, ikkje presse tid.'
+          : '<i style="color:#9CA3AF">Kamel kjem inn frå 5. mai — ingen kamel enno.</i>')}
+    ]},
+    3:{type:'styrke',short:'Styrke',dot:'dot-s',blocks:sp?[
+      {cls:'tb-styrke',lbl:'Styrke (18:30–20:00)',html:
+        `<b>Smith SL-squat:</b> ${sp.sets} eksplosivt opp — <i>${sp.note}</i><br>`+
+        '<b>Heelboks hip ext:</b> Hæl på boks over hoftenivå, vekt på hofte, kontrollert ned — proksimal hamstring + glute<br>'+
+        '<b>Isometrisk calf raise i stang:</b> Hold 5–8 sek × 5 kvar side'}
+    ]:[
+      {cls:'tb-kvile',lbl:'Ingen styrke enno',html:'Styrketrening startar gradvis frå 20. april etter landing frå leir.'}
+    ]},
+    4:{type:'trening',short:'Blokkøkt',dot:'dot-t',blocks:[
+      {cls:'tb-blokk',lbl:'Blokkløp (18:30–20:30)',html:
+        '<span style="background:#FEF3C7;color:#92400E;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700">10m</span> 2 reps — reaksjon og vinkel ut av blokka, eksplosjon<br>'+
+        '<span style="background:#DBEAFE;color:#1D4ED8;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700">20m</span> 2 reps — driv og overgang, kroppen reiser seg naturleg<br>'+
+        '<span style="background:#EDE9FE;color:#5B21B6;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700">30m</span> 2 reps — full akselerasjonsfase med naturleg oppreising'},
+      {cls:tau?'tb-blokk':'tb-kvile',lbl:'Hoppetau'+(tau?' (inne)':' (ute frå 18. mai)'),html:
+        tau
+          ? '2–3 × 20m — høg hofte, kneløft, timing i isett. 1 rotasjon = 1 steg.'
+          : '<s>Hoppetau inne</s> — ute frå 18. mai, kuttar inne for å lette belastninga.'},
+      {cls:'tb-blokk',lbl:'Hekkedrills',html:'A-skip · B-skip over låge hekkar'},
+      {cls:'tb-blokk',lbl:'Spenst',html:'Lave hink flatt 3×6 · Boks-eksplosivhopp til stavmadrass 3×5–6 (kontrollert landing)'},
+    ]},
+    5:{type:'mob',short:'Mobilitet',dot:'dot-k',blocks:[
+      {cls:'tb-mob',lbl:'Full mobilitet (30–40 min)',html:
+        '<b>Hofte:</b> 90/90 hofterotasjon 8–10 min · Hip CARs 8 reps kvar · Pigeon 2 min kvar · Hip flexor release mot vegg 90 sek kvar<br><br>'+
+        '<b>Hamstring:</b> PNF kontrakt-relax (kontrakter 6 sek, slapp av og dyp) 3 reps kvar · Piriformis/figure-4 2 min kvar<br><br>'+
+        '<b>Legg/ankel:</b> Gastrocnemius vegg 90 sek · Soleus knebøygd 90 sek · Ankelrotasjonar 10 kvar retning<br><br>'+
+        '<b>Aktivering:</b> Glute-bridge 3 sek pause 3×10 · Thorax-rotasjon sitjande 10 kvar side'}
+    ]},
+    6:{type:'trening',short:'Rytmeøkt',dot:'dot-t',blocks:[
+      {cls:'tb-rytme',lbl:'Rytmeøkt (11:00–13:00)',html:
+        '<b>Vekslar kvar veke:</b><br>'+
+        '• <b>Pyramide ned:</b> 250→200→150→100m i 85–94 %. Pause 8–10 min. Start kontrollert — farten kjem av seg sjølv.<br>'+
+        '• <b>Nedtrapp:</b> 200→150→100m i 88–93 %. Lang pause. Kjenn at farten kjem naturleg.<br>'+
+        'Piggsko. Fokus: rytme og form, ikkje maks-press.'}
+    ]},
+  };
+  return M[dow]||M[0];
+}
+
+// ============================================================
+// BUILD MEAL HTML
+// ============================================================
+function buildMealHTML(dow, ds){
+  const m = MEALS[dow];
+  if(!m) return '<div class="empty">Ingen kostdata</div>';
+  let items = m.items.map(it=>{
+    if(!it.dynamic) return it;
+    if(!ds) return {...it, d:'<b>Odde veker:</b> Tandori kylling — 250g kyllinglår marinert i tandoripasta+yogurt, 200g basmatiris, naan, raita<br><b>Partalsveker:</b> Kjøttkaker — 250g kjøttkaker storfe, brunsaus, 250g potet, erter+gulrot'};
+    const type = getSundayType(parseDS(ds));
+    return type==='tandori'
+      ? {...it, n:'🍛 Tandori kylling (odde veke)', d:'250g kyllinglår marinert i tandoripasta + yogurt · 200g basmatiris · naan · raita'}
+      : {...it, n:'🍖 Kjøttkaker (partalsveke)', d:'250g kjøttkaker storfe · brunsaus · 250g potet · erter + gulrot'};
+  });
+  const html = items.map((it,i)=>`
+    ${i>0?'<div class="mdiv"></div>':''}
+    <div class="mblk">
+      <span class="mt">${it.t}</span>
+      <span class="mn">${it.n}</span>
+      <div class="md">${it.d}</div>
+      ${it.s?`<div class="msup">${it.s}</div>`:''}
+    </div>`).join('');
+  const mc = MACROS[dow];
+  const macBar = mc ? `<div class="macros">
+    <span class="mac mac-p">Protein <b>${mc.p}g</b></span>
+    <span class="mac mac-k">Karbo <b>${mc.k}g</b></span>
+    <span class="mac mac-f">Feitt <b>${mc.f}g</b></span>
+    <span class="mac mac-c">⚡ <b>${mc.kc}</b> kcal</span>
+  </div>` : '';
+  return html + macBar;
+}
+
+// ============================================================
+// RENDER TODAY
+// ============================================================
+function renderToday(){
+  const now = new Date();
+  const ds  = toDS(now);
+  const dow = now.getDay();
+  document.getElementById('navSub').textContent = fmtFull(now);
+  const ti = getTrainInfo(dow, ds);
+  const hEl = document.getElementById('tdTrainH');
+  hEl.className = 'card-h ' + (ti.type==='kvile'||ti.type==='mob' ? 'ch-gray' : 'ch-purple');
+  hEl.textContent = `Dagens trening — ${DLONG[dow]}`;
+  document.getElementById('tdTrainB').innerHTML = buildTrainHTML(ds);
+  document.getElementById('tdKostB').innerHTML  = buildMealHTML(dow, ds);
+}
+
+function buildTrainHTML(ds){
+  const d   = parseDS(ds);
+  const dow = d.getDay();
+  const ti  = getTrainInfo(dow, ds);
+  const ph  = getPhase(ds);
+  const rc  = RACES[ds];
+  let h = '';
+  if(ph) h += `<span class="ptag ${ph.t}">${ph.n}</span><br>`;
+  if(rc) h += `<div class="tblk tb-stevne"><div class="tblk-lbl">${rc.lbl}</div>${rc.info}</div>`;
+  ti.blocks.forEach(b=>{ h += `<div class="tblk ${b.cls}"><div class="tblk-lbl">${b.lbl}</div>${b.html}</div>`; });
+  return h || '<div class="empty">Ingen treningsdata</div>';
+}
+
+// ============================================================
+// WEEK PLAN
+// ============================================================
+let curMon = getMonday(new Date());
+
+function renderWeek(){
+  const todayDS = toDS(new Date());
+  const logDates = new Set(getLogs().map(l=>l.dato));
+  const sun = new Date(curMon); sun.setDate(sun.getDate()+6);
+  document.getElementById('wkLbl').textContent = `${fmtShort(curMon)} – ${fmtShort(sun)} ${curMon.getFullYear()}`;
+  let h = '';
+  for(let i=0;i<7;i++){
+    const d  = new Date(curMon); d.setDate(d.getDate()+i);
+    const ds = toDS(d);
+    const dow= d.getDay();
+    const ti = getTrainInfo(dow,ds);
+    const ph = getPhase(ds);
+    const rc = RACES[ds];
+    const isT= ds===todayDS;
+    const isL= logDates.has(ds);
+    const isR= !!rc;
+    let cls = 'dc';
+    if(isT) cls+=' today';
+    else if(isL) cls+=' logged';
+    else if(isR) cls+=' race';
+    const chk = isL ? '<span style="color:var(--green);margin-left:3px">✓</span>' : '';
+    h += `<div class="${cls}" onclick="openModal('${ds}')">
+      <div class="dc-h"><span>${DNS[dow]}${chk}</span><span class="dc-date">${fmtShort(d)}</span></div>
+      <div class="dc-b">
+        ${ph?`<div style="font-size:10px;color:var(--text2);margin-bottom:3px">${ph.n}</div>`:''}
+        ${rc?`<div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:2px">🏁 Stevne</div>`:''}
+        <span class="dot ${ti.dot}"></span>${ti.short}
+      </div>
+    </div>`;
+  }
+  document.getElementById('wkGrid').innerHTML = h;
+}
+
+function prevWeek(){curMon.setDate(curMon.getDate()-7);renderWeek();}
+function nextWeek(){curMon.setDate(curMon.getDate()+7);renderWeek();}
+
+// ============================================================
+// KOST VIEW
+// ============================================================
+function renderKost(){
+  const order=[1,2,3,4,5,6,0];
+  document.getElementById('kostGrid').innerHTML = order.map(dow=>{
+    const m=MEALS[dow]; if(!m) return '';
+    return `<div class="kost-card">
+      <div class="kost-h ${m.hc}">${m.lbl}</div>
+      <div class="kost-b">${buildMealHTML(dow,null)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// LOG SYSTEM
+// ============================================================
+function getLogs(){try{return JSON.parse(localStorage.getItem('filip_logs')||'[]');}catch(e){return[];}}
+function saveLogs(arr){localStorage.setItem('filip_logs',JSON.stringify(arr));}
+function getLogEntry(ds){return getLogs().find(l=>l.dato===ds)||null;}
+function getSjurlog(){try{return JSON.parse(localStorage.getItem('filip_sjurlog')||'[]');}catch(e){return[];}}
+
+function saveLog(){
+  const dato=document.getElementById('lf-date').value;
+  if(!dato){alert('Vel ein dato');return;}
+  const entry={
+    dato,
+    hrv:document.getElementById('lf-hrv').value,
+    recovery:document.getElementById('lf-rec').value,
+    sovn:document.getElementById('lf-sovn').value,
+    sovnk:document.getElementById('lf-sovnk').value,
+    gjort:document.getElementById('lf-gjort').value.trim(),
+    tider:document.getElementById('lf-tider').value.trim(),
+    kropp:document.getElementById('lf-kropp').value.trim(),
+    mat:document.getElementById('lf-mat').value.trim(),
+    ts:Date.now()
+  };
+  let logs=getLogs();
+  const idx=logs.findIndex(l=>l.dato===dato);
+  if(idx>=0) logs[idx]=entry; else logs.push(entry);
+  logs.sort((a,b)=>a.dato.localeCompare(b.dato));
+  saveLogs(logs);
+  const ok=document.getElementById('lf-ok');
+  ok.style.display='inline'; setTimeout(()=>{ok.style.display='none';},2200);
+  renderLogHistory();
+  renderWeek();
+}
+
+function deleteLog(dato){
+  if(!confirm(`Slett logg for ${dato}?`)) return;
+  saveLogs(getLogs().filter(l=>l.dato!==dato));
+  renderLogHistory(); renderWeek();
+}
+
+function recBadge(rec){
+  if(!rec) return '';
+  const n=Number(rec);
+  const cls=n>=70?'rec-g':n>=50?'rec-y':'rec-r';
+  return `<span class="badge ${cls}">Recovery ${n}%</span>`;
+}
+
+function renderLogHistory(){
+  const logs=getLogs().slice().reverse().slice(0,25);
+  const el=document.getElementById('logHistory');
+  if(!el) return;
+  if(!logs.length){el.innerHTML='<div class="empty">Ingen loggar enno</div>';return;}
+  el.innerHTML=logs.map(l=>{
+    const d=parseDS(l.dato);
+    return `<div class="le">
+      <div class="le-top">
+        <div class="le-date">${fmtFull(d)}</div>
+        <button class="le-del" onclick="deleteLog('${l.dato}')">Slett</button>
+      </div>
+      <div class="badges">
+        ${l.hrv?`<span class="badge rec-x">HRV ${l.hrv}</span>`:''}
+        ${recBadge(l.recovery)}
+        ${l.sovn?`<span class="badge rec-x">Søvn ${l.sovn}t</span>`:''}
+        ${l.sovnk?`<span class="badge rec-x">Søvnkv. ${l.sovnk}%</span>`:''}
+      </div>
+      <div class="le-detail">
+        ${l.gjort?`<div><b>Gjort:</b> ${l.gjort}</div>`:''}
+        ${l.tider?`<div><b>Tider:</b> ${l.tider}</div>`:''}
+        ${l.kropp?`<div><b>Kropp:</b> ${l.kropp}</div>`:''}
+        ${l.mat?`<div><b>Mat:</b> ${l.mat}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openLogForm(ds){
+  const btn=document.querySelector('[data-v="logg"]');
+  nav(btn);
+  document.getElementById('lf-date').value=ds||toDS(new Date());
+  const e=getLogEntry(ds||toDS(new Date()));
+  ['lf-hrv','lf-rec','lf-sovn','lf-sovnk','lf-gjort','lf-tider','lf-kropp','lf-mat'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+  if(e){
+    document.getElementById('lf-hrv').value=e.hrv||'';
+    document.getElementById('lf-rec').value=e.recovery||'';
+    document.getElementById('lf-sovn').value=e.sovn||'';
+    document.getElementById('lf-sovnk').value=e.sovnk||'';
+    document.getElementById('lf-gjort').value=e.gjort||'';
+    document.getElementById('lf-tider').value=e.tider||'';
+    document.getElementById('lf-kropp').value=e.kropp||'';
+    document.getElementById('lf-mat').value=e.mat||'';
+  }
+  window.scrollTo(0,0);
+}
+
+// ============================================================
+// AI COACH
+// ============================================================
+let chatHist=[];
+
+function buildSysPrompt(){
+  const logs=getLogs().slice(-10);
+  const sjur=getSjurlog().slice(-5);
+  const allLogs=[...logs,...sjur].sort((a,b)=>(a.dato||'').localeCompare(b.dato||'')).slice(-15);
+  const logTxt=allLogs.length
+    ? allLogs.map(l=>`${l.dato}: HRV ${l.hrv||'?'}, Recovery ${l.recovery||'?'}%, Søvn ${l.sovn||'?'}t (kv. ${l.sovnk||'?'}%)\nGjort: ${l.gjort||'—'}\nTider: ${l.tider||'—'}\nKropp: ${l.kropp||'—'}\nMat: ${l.mat||'—'}`).join('\n\n')
+    : 'Ingen loggar enno.';
+  return `Du er ein personleg AI-treningscoach for Filip. Svar på norsk (nynorsk eller bokmål). Ver direkte og konkret.
+
+UTØVARPROFIL:
+Filip, 22 år, 181cm, 72kg. Sprinter 100m/200m. Trenar i Bergen. Startar på NTNU Trondheim i august 2026. Tendens til å pirke borti grensa ved skade — minn om submaksimal trening og kontinuitet.
+
+TRENINGSFILOSOFI: Submaksimal, rytme, kontinuitet. Aldri ofre neste økt for denne.
+
+TRENINGSSTRUKTUR (ukentleg):
+• Måndag 18:30: Core + overkropp (dips, benkpress, skulderpress) + 15 min mobilitet
+• Tysdag 18:30: Fartøkt — flying 30m (3–4 reps, 8–9 min pause). Kamel frå 5. mai: 15m aks + 20m flyt + 20m reaktivering, MAKS 2 reps, 10 min pause.
+• Onsdag 18:30: Styrke — Smith SL-squat, heelboks hip ext, isometrisk calf raise. Periodisering: intro 3×5 (apr) → bygg 4×5 → topp 4×6 (mai) → ned 3×4-5 → vedlikehald 2×3-4
+• Torsdag 18:30: Blokkøkt — 10m reaksjon, 20m driv, 30m full aks. Hoppetau inne til 17. mai. Hekkedrills. Spenst.
+• Fredag: Full mobilitet 30–40 min
+• Laurdag 11:00: Rytmeøkt piggsko (pyramide ned eller nedtrapp)
+• Søndag: Kvile
+
+STEVNEPLAN (UTAN Next Call Bislett):
+28.mai TMG Bergen 100m · 5.jun Framo-lekene 400m+200m · 20.jun Lillehammerlekene · 24.jun Boysen Memorial 200m · 8.jul Joensuu 200m · 12.jul Tampere 100m · 23-25.jul 🏆 NM Trondheim (HOVUDMÅL 1) · 22.aug NM Stafetter · 23.aug Mjøssprinten · 28-30.aug 🏆 Jr. NM Oslo (HOVUDMÅL 2)
+
+KOSTPLAN (~2300–2600 kcal, 180–215g protein):
+Man: kyllingwok · Tys: pasta bolognese · Ons: kyllinggryte · Tor: biff m/potet · Fre: alltid taco · Lør: alltid biff 220g · Søn: tandori (odde veker) / kjøttkaker (partalsveker)
+Tilskot: kalsium+omega3+folsyre+D morgon · C-vit 30min før trening · magnesium+jern+C kveld
+
+SISTE LOGGAR (filip_logs + sjurlog, siste 15):
+${logTxt}`;
+}
+
+function initAI(){
+  const key=localStorage.getItem('filip_claude_key');
+  document.getElementById('aiSetup').style.display=key?'none':'block';
+  document.getElementById('aiChat').style.display=key?'block':'none';
+  if(key&&chatHist.length===0) addAIMsg('assistant','Hei Filip! Eg kjenner treningsplanen, kostplanen, stevneplanen og logghistorikken din. Spør om kva som helst — form, ernæring, taktikk, restitusjon. 💪');
+}
+
+function saveKeyAndInit(){
+  const k=document.getElementById('aiKeyIn').value.trim();
+  if(!k){alert('Lim inn API-nøkkel');return;}
+  localStorage.setItem('filip_claude_key',k);
+  initAI();
+}
+
+function addAIMsg(role,txt){
+  chatHist.push({role,content:txt});
+  renderChat();
+}
+
+function renderChat(){
+  const el=document.getElementById('aiMsgs');
+  if(!el) return;
+  el.innerHTML=chatHist.map(m=>`<div class="ai-msg ${m.role==='user'?'ai-u':'ai-a'}">${esc(m.content)}</div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+async function sendAI(){
+  const key=localStorage.getItem('filip_claude_key');
+  if(!key){initAI();return;}
+  const ta=document.getElementById('aiIn');
+  const txt=ta.value.trim(); if(!txt) return;
+  addAIMsg('user',txt);
+  ta.value=''; ta.style.height='42px';
+  const btn=document.getElementById('aiSendBtn');
+  btn.disabled=true; btn.textContent='…';
+  const loadEl=document.createElement('div');
+  loadEl.className='ai-msg ai-loading'; loadEl.textContent='Tenkjer…';
+  document.getElementById('aiMsgs').appendChild(loadEl);
+  document.getElementById('aiMsgs').scrollTop=99999;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'content-type':'application/json',
+        'x-api-key':key,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1024,
+        system:buildSysPrompt(),
+        messages:chatHist.filter(m=>m.role==='user'||m.role==='assistant').slice(-20)
+      })
+    });
+    loadEl.remove();
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${res.status}`);}
+    const data=await res.json();
+    addAIMsg('assistant',data.content[0].text);
+  }catch(e){
+    loadEl.remove();
+    addAIMsg('assistant',`Feil: ${e.message}`);
+  }finally{
+    btn.disabled=false; btn.textContent='Send';
+  }
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function renderKeyStatus(){
+  const key=localStorage.getItem('filip_claude_key');
+  const el=document.getElementById('ksStatus');
+  if(!el) return;
+  el.textContent=key?`Nøkkel lagra: ${key.slice(0,14)}…`:'Ingen nøkkel lagra';
+  el.style.color=key?'var(--green-text)':'var(--text2)';
+}
+
+function saveKeySettings(){
+  const k=document.getElementById('ksIn').value.trim();
+  if(!k){alert('Lim inn nøkkel');return;}
+  localStorage.setItem('filip_claude_key',k);
+  document.getElementById('ksIn').value='';
+  renderKeyStatus(); alert('Nøkkel lagra ✓');
+}
+
+function deleteKeySettings(){
+  if(!confirm('Slett API-nøkkel?')) return;
+  localStorage.removeItem('filip_claude_key'); renderKeyStatus();
+}
+
+function exportLogs(){
+  const logs=getLogs();
+  if(!logs.length){alert('Ingen loggar å eksportere');return;}
+  const blob=new Blob([JSON.stringify(logs,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`filip_logg_${toDS(new Date())}.json`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function importLogs(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const imp=JSON.parse(e.target.result);
+      if(!Array.isArray(imp)) throw new Error('Ugyldig format — forventar array');
+      const cur=getLogs(); let added=0;
+      for(const entry of imp){
+        if(!entry.dato) continue;
+        const idx=cur.findIndex(l=>l.dato===entry.dato);
+        if(idx>=0) cur[idx]=entry; else{cur.push(entry);added++;}
+      }
+      cur.sort((a,b)=>a.dato.localeCompare(b.dato));
+      saveLogs(cur); renderLogHistory(); renderWeek();
+      showMsg(`Importert ${imp.length} loggar (${added} nye) ✓`);
+    }catch(err){alert('Feil: '+err.message);}
+  };
+  r.readAsText(f); ev.target.value='';
+}
+
+function importSjurlog(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      localStorage.setItem('filip_sjurlog', JSON.stringify(data));
+      showMsg('Sjurlog importert ✓');
+    }catch(err){alert('Feil ved Sjurlog-import: '+err.message);}
+  };
+  r.readAsText(f); ev.target.value='';
+}
+
+function deleteAllLogs(){
+  if(!confirm('Slett ALLE loggar? Dette kan ikkje angrast!')) return;
+  localStorage.removeItem('filip_logs');
+  renderLogHistory(); renderWeek(); alert('Alle loggar sletta');
+}
+
+function showMsg(txt){
+  const el=document.getElementById('importMsg');
+  if(!el) return;
+  el.textContent=txt; el.style.display='block';
+  setTimeout(()=>{el.style.display='none';},3500);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(ds){
+  const d=parseDS(ds); const dow=d.getDay();
+  document.getElementById('mTitle').textContent=fmtFull(d);
+  const entry=getLogEntry(ds);
+  let logH='';
+  if(entry){
+    logH=`<div class="badges">
+      ${entry.hrv?`<span class="badge rec-x">HRV ${entry.hrv}</span>`:''}
+      ${recBadge(entry.recovery)}
+      ${entry.sovn?`<span class="badge rec-x">Søvn ${entry.sovn}t</span>`:''}
+      ${entry.sovnk?`<span class="badge rec-x">Søvnkv. ${entry.sovnk}%</span>`:''}
+    </div>
+    <div class="le-detail">
+      ${entry.gjort?`<div><b>Gjort:</b> ${entry.gjort}</div>`:''}
+      ${entry.tider?`<div><b>Tider:</b> ${entry.tider}</div>`:''}
+      ${entry.kropp?`<div><b>Kropp:</b> ${entry.kropp}</div>`:''}
+      ${entry.mat?`<div><b>Mat:</b> ${entry.mat}</div>`:''}
+    </div>
+    <button class="btn btn-sec" style="margin-top:8px;font-size:11px" onclick="closeModal();openLogForm('${ds}')">Rediger logg</button>`;
+  } else {
+    logH=`<span style="font-size:12px;color:var(--text2)">Ingen logg for denne dagen. </span><span style="color:var(--purple);cursor:pointer;font-size:12px;font-weight:700" onclick="closeModal();openLogForm('${ds}')">Logg no →</span>`;
+  }
+  document.getElementById('mBody').innerHTML=`
+    <div class="msec">Trening</div>${buildTrainHTML(ds)}
+    <div class="msec">Logg</div>${logH}
+    <div class="msec">Kostplan</div>${buildMealHTML(dow,ds)}`;
+  document.getElementById('modal').classList.add('on');
+}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+function closeModalBg(e){if(e.target.id==='modal')closeModal();}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function nav(btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  btn.classList.add('on');
+  const v=btn.dataset.v;
+  document.getElementById('v-'+v).classList.add('on');
+  if(v==='logg'){renderLogHistory();}
+  if(v==='ai'){initAI();}
+  if(v==='settings'){renderKeyStatus();}
+  if(v==='plan'){renderWeek();}
+}
+
+// ============================================================
+// AI keyboard
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  const ta=document.getElementById('aiIn');
+  ta.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}
+  });
+  ta.addEventListener('input',function(){
+    this.style.height='42px';
+    this.style.height=Math.min(this.scrollHeight,120)+'px';
+  });
+  document.getElementById('lf-date').value=toDS(new Date());
+});
+
+// ============================================================
+// INIT
+// ============================================================
+renderToday();
+renderWeek();
+renderKost();
+</script>
+</body>
+</html>
