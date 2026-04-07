@@ -285,9 +285,7 @@ textarea.fi{resize:vertical;min-height:54px;}
         <div><label class="fl" style="font-size:10px">Søvnkv. %</label><input class="fi" type="number" id="lf-sovnk" placeholder="80" min="0" max="100"></div>
       </div>
     </div>
-    <div class="fg"><label class="fl">Kva blei gjort</label><textarea class="fi" id="lf-gjort" placeholder="Fartøkt: 3×flying 30m&#10;Løp 1: 3.05 · Løp 2: 3.04 · Løp 3: 3.02"></textarea></div>
-    <div class="fg"><label class="fl">Tider og resultat</label><textarea class="fi" id="lf-tider" placeholder="100m: 10.98 (+0.8 m/s)"></textarea></div>
-    <div class="fg"><label class="fl">Kropp og kjensle</label><textarea class="fi" id="lf-kropp" placeholder="Kjentes bra. Litt stiv hamstring etter oppvarming..."></textarea></div>
+    <div class="fg"><label class="fl">Kort samandrag av økta</label><textarea class="fi" id="lf-gjort" placeholder="Fartøkt: 3×flying 30m. Løp 1: 3.05 · Løp 2: 3.04 · Løp 3: 3.02. Kjentes bra, god rytme."></textarea></div>
     <div class="fg"><label class="fl">Mat (avvik frå plan)</label><textarea class="fi" id="lf-mat" placeholder="Følgde planen. Ekstra banan pre-trening."></textarea></div>
     <button class="btn btn-dark" onclick="saveLog()">Lagre logg</button>
     <span class="msg-ok" id="lf-ok" style="display:none">Lagra ✓</span>
@@ -754,8 +752,6 @@ function saveLog(){
     sovn:document.getElementById('lf-sovn').value,
     sovnk:document.getElementById('lf-sovnk').value,
     gjort:document.getElementById('lf-gjort').value.trim(),
-    tider:document.getElementById('lf-tider').value.trim(),
-    kropp:document.getElementById('lf-kropp').value.trim(),
     mat:document.getElementById('lf-mat').value.trim(),
     ts:Date.now()
   };
@@ -778,9 +774,7 @@ function saveLog(){
       recovery:entry.recovery,
       sleep:entry.sovn,
       sleepQ:entry.sovnk,
-      done:entry.gjort,
-      times:entry.tider,
-      feel:entry.kropp,
+      summary:entry.gjort,
       food:entry.mat,
       timestamp:new Date().toISOString()
     })
@@ -825,9 +819,7 @@ function renderLogHistory(){
         ${l.sovnk?`<span class="badge rec-x">Søvnkv. ${l.sovnk}%</span>`:''}
       </div>
       <div class="le-detail">
-        ${l.gjort?`<div><b>Gjort:</b> ${l.gjort}</div>`:''}
-        ${l.tider?`<div><b>Tider:</b> ${l.tider}</div>`:''}
-        ${l.kropp?`<div><b>Kropp:</b> ${l.kropp}</div>`:''}
+        ${l.gjort?`<div><b>Samandrag:</b> ${l.gjort}</div>`:''}
         ${l.mat?`<div><b>Mat:</b> ${l.mat}</div>`:''}
       </div>
     </div>`;
@@ -839,7 +831,7 @@ function openLogForm(ds){
   nav(btn);
   document.getElementById('lf-date').value=ds||toDS(new Date());
   const e=getLogEntry(ds||toDS(new Date()));
-  ['lf-hrv','lf-rec','lf-sovn','lf-sovnk','lf-gjort','lf-tider','lf-kropp','lf-mat'].forEach(id=>{
+  ['lf-hrv','lf-rec','lf-sovn','lf-sovnk','lf-gjort','lf-mat'].forEach(id=>{
     document.getElementById(id).value='';
   });
   if(e){
@@ -848,8 +840,6 @@ function openLogForm(ds){
     document.getElementById('lf-sovn').value=e.sovn||'';
     document.getElementById('lf-sovnk').value=e.sovnk||'';
     document.getElementById('lf-gjort').value=e.gjort||'';
-    document.getElementById('lf-tider').value=e.tider||'';
-    document.getElementById('lf-kropp').value=e.kropp||'';
     document.getElementById('lf-mat').value=e.mat||'';
   }
   window.scrollTo(0,0);
@@ -865,7 +855,7 @@ function buildSysPrompt(){
   const sjur=getSjurlog().slice(-5);
   const allLogs=[...logs,...sjur].sort((a,b)=>(a.dato||'').localeCompare(b.dato||'')).slice(-15);
   const logTxt=allLogs.length
-    ? allLogs.map(l=>`${l.dato}: HRV ${l.hrv||'?'}, Recovery ${l.recovery||'?'}%, Søvn ${l.sovn||'?'}t (kv. ${l.sovnk||'?'}%)\nGjort: ${l.gjort||'—'}\nTider: ${l.tider||'—'}\nKropp: ${l.kropp||'—'}\nMat: ${l.mat||'—'}`).join('\n\n')
+    ? allLogs.map(l=>`${l.dato}: HRV ${l.hrv||'?'}, Recovery ${l.recovery||'?'}%, Søvn ${l.sovn||'?'}t (kv. ${l.sovnk||'?'}%)\nSamandrag: ${l.gjort||'—'}\nMat: ${l.mat||'—'}`).join('\n\n')
     : 'Ingen loggar enno.';
   return `Du er ein personleg AI-treningscoach for Filip. Svar på norsk (nynorsk eller bokmål). Ver direkte og konkret.
 
@@ -1053,10 +1043,8 @@ async function fetchFromSheets(){
           recovery:row.Recovery||'',
           sovn:row.Søvn||row.Sovn||'',
           sovnk:row.Søvnkvalitet||row.Sovnkvalitet||'',
-          gjort:row.Økt||row.Okt||'',
-          tider:row.Tider||'',
-          kropp:row.Kropp||'',
-          mat:row.Mat||'',
+          gjort:row.Samandrag||row.Økt||row.Okt||'',
+          mat:row.Mat||row.Food||'',
           ts:Date.now()
         }));
       const merged=[...existing,...newEntries];
@@ -1095,9 +1083,7 @@ function openModal(ds){
       ${entry.sovnk?`<span class="badge rec-x">Søvnkv. ${entry.sovnk}%</span>`:''}
     </div>
     <div class="le-detail">
-      ${entry.gjort?`<div><b>Gjort:</b> ${entry.gjort}</div>`:''}
-      ${entry.tider?`<div><b>Tider:</b> ${entry.tider}</div>`:''}
-      ${entry.kropp?`<div><b>Kropp:</b> ${entry.kropp}</div>`:''}
+      ${entry.gjort?`<div><b>Samandrag:</b> ${entry.gjort}</div>`:''}
       ${entry.mat?`<div><b>Mat:</b> ${entry.mat}</div>`:''}
     </div>
     <button class="btn btn-sec" style="margin-top:8px;font-size:11px" onclick="closeModal();openLogForm('${ds}')">Rediger logg</button>`;
