@@ -457,37 +457,53 @@ const MACROS = {
 
 // Meals: keyed by weekday (0=sun..6=sat)
 const MEALS = {
-  1:{hc:'kd-man',lbl:'Måndag — Kyllingwok',items:[
+  1:{hc:'kd-man',lbl:'Måndag',items:[
     {t:'07:00',n:'Havregraut + egg + bær',d:'100g havre, 3 egg røregg, 100g bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
     {t:'10:00',n:'Skyr + grovbrød',d:'200g skyr naturell, 1–2 skiver grovbrød, agurk/tomat'},
     {t:'12:30',n:'Kylling + ris + brokkoli',d:'180g kylling, 200g ris, brokkoli, sitron og krydder'},
     {t:'15:30',n:'Banan + skyr',d:'1 banan, 150g skyr naturell'},
-    {t:'17:00',n:'🍜 Kyllingwok',d:'180g kylling, paprika, løk, soyasaus, ingefær, kvitlauk, 150g nudlar',s:'C-vitamin 30 min før trening'},
+    {t:'17:00',dinnerAlt:true,alts:[
+      {n:'🍜 Kyllingwok',d:'180g kyllingbryst (rå) · 200g nudlar (kokt) · paprika, løk, soyasaus, ingefær · P:42g · K:58g · F:4g · 440kcal'},
+      {n:'🍠 Kylling med søtpotet',d:'180g kyllingbryst (rå) · 250g søtpotet (kokt) · brokkoli · P:42g · K:55g · F:3g · 415kcal'},
+      {n:'🍝 Kyllingpasta',d:'180g kyllingbryst (rå) · 200g pasta (kokt) · tomatsaus, spinat · P:44g · K:60g · F:4g · 455kcal'},
+    ],s:'C-vitamin 30 min før trening'},
     {t:'21:00',n:'Skyr + bær',d:'200g skyr naturell, 100g bær',s:'Magnesium · Jern · C-vitamin'},
   ]},
-  2:{hc:'kd-tys',lbl:'Tysdag — Pasta bolognese',items:[
+  2:{hc:'kd-tys',lbl:'Tysdag',items:[
     {t:'07:00',n:'Havregraut + egg + bær — stor',d:'120g havre, 3 egg røregg, 100g bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
     {t:'10:00',n:'Grovbrød + kylling',d:'2 skiver grovbrød, 100g kylling, tomat'},
     {t:'12:00',n:'Ris + kylling — stor',d:'200g kylling, 220g ris, paprika/brokkoli'},
     {t:'15:00',n:'Skyr + banan',d:'200g skyr naturell, 1–2 banan'},
-    {t:'17:00',n:'🍝 Pasta bolognese',d:'180g kjøttdeig storfe, 180g pasta, tomatsaus, spinat',s:'C-vitamin 30 min før trening'},
+    {t:'17:00',dinnerAlt:true,alts:[
+      {n:'🍝 Pasta bolognese',d:'180g storfe kjøttdeig (rå) · 200g pasta (kokt) · tomatsaus, spinat · P:44g · K:60g · F:10g · 510kcal'},
+      {n:'🍚 Kylling og ris',d:'180g kyllingbryst (rå) · 220g ris (kokt) · lett paprikasaus, grønt · P:42g · K:62g · F:4g · 455kcal'},
+      {n:'🥣 Kjøttdeig-bowl',d:'180g storfe kjøttdeig (rå) · 220g ris (kokt) · salsa, salat, litt rømme · P:44g · K:62g · F:12g · 535kcal'},
+    ],s:'C-vitamin 30 min før trening'},
     {t:'~20:30',n:'Restitusjon etter trening',d:'200g skyr + 1 banan — innan 30 min'},
     {t:'21:15',n:'Gresk yogurt vanilje + bær',d:'150g gresk yogurt vanilje, bær',s:'Magnesium · Jern · C-vitamin'},
   ]},
-  3:{hc:'kd-ons',lbl:'Onsdag — Kyllinggryte',items:[
+  3:{hc:'kd-ons',lbl:'Onsdag',items:[
     {t:'07:30',n:'Havregraut + skyr',d:'100g havre, 150g skyr rørt inn, bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
     {t:'10:00',n:'Gresk yogurt vanilje + frukt',d:'200g gresk yogurt vanilje, 1 banan, litt granola'},
     {t:'12:30',n:'Kylling + søtpotet + grønt',d:'180g kylling, 220g søtpotet, spinat'},
     {t:'15:30',n:'Skyr + grovbrød',d:'200g skyr naturell, 1 skive grovbrød'},
-    {t:'17:00',n:'🍲 Kyllinggryte',d:'200g kyllinglår, kokosmelk/tomatsaus, curry, 180g ris, spinat',s:'C-vitamin 30 min før trening'},
+    {t:'17:00',dinnerAlt:true,alts:[
+      {n:'🍲 Kyllinggryte',d:'200g kyllinglår (rå) · 200g ris (kokt) · tomatsaus, mild curry, spinat · P:44g · K:58g · F:6g · 465kcal'},
+      {n:'🍗 Kylling i ovn',d:'200g kyllingbryst (rå) · 250g potet (kokt) · brokkoli · P:47g · K:50g · F:3g · 415kcal'},
+      {n:'🥘 Storfe og grønsakssupé',d:'180g storfe kjøttdeig (rå) · 2 skiver grovbrød · gulrot, løk, selleri · P:42g · K:45g · F:10g · 440kcal'},
+    ],s:'C-vitamin 30 min før trening'},
     {t:'20:30',n:'Skyr + bær',d:'200g skyr naturell, bær',s:'Magnesium · Jern · C-vitamin'},
   ]},
-  4:{hc:'kd-tor',lbl:'Torsdag — Biff med potet',items:[
+  4:{hc:'kd-tor',lbl:'Torsdag',items:[
     {t:'07:00',n:'Havregraut + egg + bær',d:'120g havre, 3 egg røregg, bær, honning',s:'Kalsium · Omega-3 · Folsyre · D-vitamin'},
     {t:'10:00',n:'Skyr + grovbrød',d:'200g skyr naturell, 1–2 skiver grovbrød, tomat'},
     {t:'12:00',n:'Kylling + ris — stor',d:'200g kylling, 220g ris, brokkoli/paprika'},
     {t:'15:00',n:'Banan + skyr',d:'1–2 banan, 150g skyr naturell'},
-    {t:'17:00',n:'🥩 Biff med potet',d:'180g biff, 250g potet, lett brunsaus, brokkoli',s:'C-vitamin 30 min før trening'},
+    {t:'17:00',dinnerAlt:true,alts:[
+      {n:'🥩 Biff med potet',d:'180g biff (rå) · 280g potet (kokt) · lett brunsaus, brokkoli · P:44g · K:55g · F:8g · 475kcal'},
+      {n:'🍗 Kylling med ris og soyaglasur',d:'180g kyllingbryst (rå) · 220g ris (kokt) · lett soyaglasur, grønt · P:42g · K:62g · F:3g · 445kcal'},
+      {n:'🍝 Kjøttdeig med pasta',d:'180g storfe kjøttdeig (rå) · 200g pasta (kokt) · tomatsaus, grønt · P:44g · K:60g · F:10g · 510kcal'},
+    ],s:'C-vitamin 30 min før trening'},
     {t:'~20:30',n:'Restitusjon etter trening',d:'200g skyr + 1 banan — innan 30 min'},
     {t:'21:15',n:'Gresk yogurt vanilje',d:'150g gresk yogurt vanilje',s:'Magnesium · Jern · C-vitamin'},
   ]},
@@ -611,29 +627,61 @@ function getTrainInfo(dow, ds){
 function buildMealHTML(dow, ds){
   const m = MEALS[dow];
   if(!m) return '<div class="empty">Ingen kostdata</div>';
-  let items = m.items.map(it=>{
-    if(!it.dynamic) return it;
-    if(!ds) return {...it, d:'<b>Odde veker:</b> Tandori kylling — 250g kyllinglår marinert i tandoripasta+yogurt, 200g basmatiris, naan, raita<br><b>Partalsveker:</b> Kjøttkaker — 250g kjøttkaker storfe, brunsaus, 250g potet, erter+gulrot'};
-    const type = getSundayType(parseDS(ds));
-    return type==='tandori'
-      ? {...it, n:'🍛 Tandori kylling (odde veke)', d:'250g kyllinglår marinert i tandoripasta + yogurt · 200g basmatiris · naan · raita'}
-      : {...it, n:'🍖 Kjøttkaker (partalsveke)', d:'250g kjøttkaker storfe · brunsaus · 250g potet · erter + gulrot'};
+  // Calculate dinner alt index for today-view
+  function getDinnerAlt(dateObj){
+    return Math.ceil(((dateObj - new Date(dateObj.getFullYear(),0,1))/86400000 + new Date(dateObj.getFullYear(),0,1).getDay()+1)/7) % 3;
+  }
+  let html = '';
+  m.items.forEach((it,i)=>{
+    html += i>0?'<div class="mdiv"></div>':'';
+    if(it.dynamic){
+      // Sunday rotating dinner
+      let n, d;
+      if(!ds){
+        n = 'MIDDAG'; d = '<b>Odde veker:</b> Tandori kylling — 250g kyllinglår marinert i tandoripasta+yogurt, 200g basmatiris, naan, raita<br><b>Partalsveker:</b> Kjøttkaker — 250g kjøttkaker storfe, brunsaus, 250g potet, erter+gulrot';
+      } else {
+        const type = getSundayType(parseDS(ds));
+        n = type==='tandori' ? '🍛 Tandori kylling (odde veke)' : '🍖 Kjøttkaker (partalsveke)';
+        d = type==='tandori' ? '250g kyllinglår marinert i tandoripasta + yogurt · 200g basmatiris · naan · raita' : '250g kjøttkaker storfe · brunsaus · 250g potet · erter + gulrot';
+      }
+      html += `<div class="mblk"><span class="mt">${it.t}</span><span class="mn">${n}</span><div class="md">${d}</div></div>`;
+    } else if(it.dinnerAlt){
+      // Mon–Thu rotating dinner
+      if(ds){
+        // I dag: show only active alternative
+        const alt = getDinnerAlt(parseDS(ds));
+        const a = it.alts[alt];
+        html += `<div class="mblk">
+          <span class="mt">${it.t}</span>
+          <span class="mn">${a.n}</span>
+          <div class="md">${a.d}</div>
+          ${it.s?`<div class="msup">${it.s}</div>`:''}
+        </div>`;
+      } else {
+        // Kostplan: show all 3 alternatives
+        const labels = ['Veke A','Veke B','Veke C'];
+        html += `<div class="mblk"><span class="mt">${it.t} — Middag (vekslar kvar veke)</span>`;
+        it.alts.forEach((a,ai)=>{
+          html += `${ai>0?'<div style="margin-top:5px"></div>':''}<span class="mn"><span style="font-size:10px;font-weight:700;color:var(--text2)">${labels[ai]}:</span> ${a.n}</span><div class="md">${a.d}</div>`;
+        });
+        html += `${it.s?`<div class="msup">${it.s}</div>`:''}</div>`;
+      }
+    } else {
+      html += `<div class="mblk">
+        <span class="mt">${it.t}</span>
+        <span class="mn">${it.n}</span>
+        <div class="md">${it.d}</div>
+        ${it.s?`<div class="msup">${it.s}</div>`:''}
+      </div>`;
+    }
   });
-  const html = items.map((it,i)=>`
-    ${i>0?'<div class="mdiv"></div>':''}
-    <div class="mblk">
-      <span class="mt">${it.t}</span>
-      <span class="mn">${it.n}</span>
-      <div class="md">${it.d}</div>
-      ${it.s?`<div class="msup">${it.s}</div>`:''}
-    </div>`).join('');
   const mc = MACROS[dow];
   const macBar = mc ? `<div class="macros">
     <span class="mac mac-p">Protein <b>${mc.p}g</b></span>
     <span class="mac mac-k">Karbo <b>${mc.k}g</b></span>
     <span class="mac mac-f">Feitt <b>${mc.f}g</b></span>
     <span class="mac mac-c">⚡ <b>${mc.kc}</b> kcal</span>
-  </div>` : '';
+  </div><div style="font-size:10px;color:var(--text3);margin-top:4px">(Protein i rå form · Karbo i ferdig kokt form)</div>` : '';
   return html + macBar;
 }
 
