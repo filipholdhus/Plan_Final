@@ -238,6 +238,13 @@ textarea.fi{resize:vertical;min-height:54px;}
       <div class="card-b" id="tdKostB"></div>
     </div>
   </div>
+  <a href="https://sjurlog.com/#calendar" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:#3B82F6;color:#fff;text-decoration:none;border-radius:12px;padding:14px 20px;margin-top:12px;box-shadow:0 2px 8px rgba(59,130,246,0.3);">
+    <div>
+      <div style="font-size:14px;font-weight:700">📋 Logg dagens økt i Sjurlog</div>
+      <div style="font-size:11px;opacity:0.85;margin-top:3px">Trykk for å opne treningslogg</div>
+    </div>
+    <div style="font-size:22px">→</div>
+  </a>
 </div>
 
 <!-- SESONGPLAN -->
@@ -333,6 +340,10 @@ textarea.fi{resize:vertical;min-height:54px;}
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importLogs(event)">
     </div>
     <div style="margin-top:10px">
+      <p class="sc-note">Hent loggar frå Google Sheets (synkroniser).</p>
+      <button class="btn btn-sec" onclick="fetchFromSheets()">Hent loggar frå Google Sheets</button>
+    </div>
+    <div style="margin-top:10px">
       <p class="sc-note">Importer data frå Sjurlog (lagrast separat).</p>
       <button class="btn btn-sec" onclick="document.getElementById('importSjur').click()">Importer Sjurlog JSON</button>
       <input type="file" id="importSjur" accept=".json" style="display:none" onchange="importSjurlog(event)">
@@ -366,6 +377,8 @@ textarea.fi{resize:vertical;min-height:54px;}
 // ============================================================
 // CONSTANTS
 // ============================================================
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxaSCYI4EvhNUfTv7S8s2Ghmlv4Fh0oDBm8gvJyI-cwRvj7CoMNjE9eX0mOVbK75Ibv/exec';
+
 const DNS = ['Søn','Man','Tys','Ons','Tor','Fre','Lør'];
 const DLONG = ['Søndag','Måndag','Tysdag','Onsdag','Torsdag','Fredag','Laurdag'];
 const MN = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember'];
@@ -752,9 +765,32 @@ function saveLog(){
   logs.sort((a,b)=>a.dato.localeCompare(b.dato));
   saveLogs(logs);
   const ok=document.getElementById('lf-ok');
-  ok.style.display='inline'; setTimeout(()=>{ok.style.display='none';},2200);
+  ok.textContent='Lagra lokalt…'; ok.style.display='inline';
   renderLogHistory();
   renderWeek();
+  fetch(SHEETS_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      date:entry.dato,
+      hrv:entry.hrv,
+      recovery:entry.recovery,
+      sleep:entry.sovn,
+      sleepQ:entry.sovnk,
+      done:entry.gjort,
+      times:entry.tider,
+      feel:entry.kropp,
+      food:entry.mat,
+      timestamp:new Date().toISOString()
+    })
+  }).then(()=>{
+    ok.textContent='✓ Lagra lokalt + sendt til Google Sheets';
+    setTimeout(()=>{ok.style.display='none';},3500);
+  }).catch(()=>{
+    ok.textContent='✓ Lagra lokalt (Sheets utilgjengeleg)';
+    setTimeout(()=>{ok.style.display='none';},3500);
+  });
 }
 
 function deleteLog(dato){
@@ -999,6 +1035,41 @@ function deleteAllLogs(){
   if(!confirm('Slett ALLE loggar? Dette kan ikkje angrast!')) return;
   localStorage.removeItem('filip_logs');
   renderLogHistory(); renderWeek(); alert('Alle loggar sletta');
+}
+
+async function fetchFromSheets(){
+  showMsg('Hentar frå Google Sheets…');
+  try{
+    const res=await fetch(SHEETS_URL);
+    const data=await res.json();
+    if(Array.isArray(data)&&data.length>0){
+      const existing=getLogs();
+      const existingDates=new Set(existing.map(l=>l.dato));
+      const newEntries=data
+        .filter(row=>row.Dato&&!existingDates.has(row.Dato))
+        .map(row=>({
+          dato:row.Dato,
+          hrv:row.HRV||'',
+          recovery:row.Recovery||'',
+          sovn:row.Søvn||row.Sovn||'',
+          sovnk:row.Søvnkvalitet||row.Sovnkvalitet||'',
+          gjort:row.Økt||row.Okt||'',
+          tider:row.Tider||'',
+          kropp:row.Kropp||'',
+          mat:row.Mat||'',
+          ts:Date.now()
+        }));
+      const merged=[...existing,...newEntries];
+      merged.sort((a,b)=>a.dato.localeCompare(b.dato));
+      saveLogs(merged);
+      renderLogHistory(); renderWeek();
+      showMsg(`Henta ${newEntries.length} nye loggar frå Google Sheets ✓`);
+    } else {
+      showMsg('Ingen nye loggar i Sheets');
+    }
+  }catch(e){
+    showMsg('Kunne ikkje hente frå Sheets: '+e.message);
+  }
 }
 
 function showMsg(txt){
