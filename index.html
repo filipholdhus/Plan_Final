@@ -69,6 +69,7 @@ a{color:var(--purple);text-decoration:none;}
 .tb-rytme{background:#F0FDF4;border-left:3px solid #22C55E;}
 .tb-kvile{background:var(--bg3);border-left:3px solid #9CA3AF;}
 .tb-stevne{background:var(--red-bg);border-left:3px solid #EF4444;}
+.tb-stevne-usikker{background:#FEF9EC;border-left:3px solid #F59E0B;color:#92400E;}
 @media(prefers-color-scheme:dark){
   .tb-fart{background:#1e1a3a;}.tb-blokk{background:#0a2a1e;}
   .tb-styrke{background:#0f1e30;}.tb-mob{background:#1a0f30;}
@@ -109,14 +110,16 @@ a{color:var(--purple);text-decoration:none;}
 .wk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
 @media(max-width:900px){.wk-grid{grid-template-columns:repeat(4,1fr);}}
 @media(max-width:500px){.wk-grid{grid-template-columns:repeat(2,1fr);}}
-.dc{background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:box-shadow .15s;}
+.dc{background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:box-shadow .15s;min-height:120px;display:flex;flex-direction:column;}
 .dc:hover{box-shadow:0 3px 10px rgba(0,0,0,.12);}
 .dc.today{border-color:var(--purple);border-width:2px;}
 .dc.logged{border-color:var(--green);border-width:2px;}
 .dc.race{border-color:var(--red);border-width:2px;}
+.dc.race-main{border-color:#EF4444;border-width:2.5px;}
+.dc.race-usikker{border-color:#F59E0B;border-width:2px;}
 .dc-h{padding:6px 8px;font-size:10px;font-weight:700;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;letter-spacing:.04em;}
 .dc-date{font-size:10px;color:var(--text2);font-weight:400;}
-.dc-b{padding:6px 8px;font-size:11px;line-height:1.5;color:var(--text2);}
+.dc-b{padding:10px 12px;font-size:12px;line-height:1.5;color:var(--text2);flex:1;}
 .dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;flex-shrink:0;}
 .dot-t{background:var(--purple);}.dot-s{background:#3B82F6;}.dot-k{background:#9CA3AF;}.dot-r{background:#EF4444;}
 
@@ -399,16 +402,17 @@ const PHASES = [
 ];
 
 const RACES = {
-  '2026-05-28':{lbl:'🏁 TMG Bergen — 100m',info:'Sesongopnar. Løp teknisk og rytmisk.'},
-  '2026-06-05':{lbl:'🏁 Framo-lekene Bergen',info:'400m + 200m. Prioriter 400m — viktig kapasitetsreferanse.'},
-  '2026-06-20':{lbl:'🏁 Lillehammerlekene',info:'100m + 200m. Første dobbel i sesongen.'},
-  '2026-06-24':{lbl:'🏁 Boysen Memorial Bislett',info:'200m. To dagar etter Lillehammer — spar energi.'},
-  '2026-07-08':{lbl:'🏁 Joensuu Finland',info:'200m.'},
-  '2026-07-12':{lbl:'🏁 Tampere Finland',info:'100m. Fire dagar etter Joensuu.'},
-  '2026-07-23':{lbl:'🏆 NM Trondheim',info:'100m + 200m. HOVUDMÅL #1. (23.–25. juli)'},
-  '2026-08-22':{lbl:'🏁 NM Stafetter Moelven',info:'4×100m.'},
-  '2026-08-23':{lbl:'🏁 Mjøssprinten',info:'100m/200m. Avgjer fredag 21/8 etter forma.'},
-  '2026-08-28':{lbl:'🏆 Jr. NM Oslo',info:'100m + 200m. HOVUDMÅL #2. (28.–30. aug)'},
+  '2026-05-20':{lbl:'🏁 Arne Risa Classic — 200m',short:'Arne Risa Classic',usikker:true,c:'tb-stevne-usikker',info:'200m. Usikker deltaking — treningsstevne. Avgjer etter forma.'},
+  '2026-05-28':{lbl:'🏁 TMG Bergen — 100m',short:'TMG Bergen — 100m',info:'Sesongopnar. Løp teknisk og rytmisk.'},
+  '2026-06-05':{lbl:'🏁 Framo-lekene Bergen',short:'Framo-lekene',info:'400m + 200m. Prioriter 400m — viktig kapasitetsreferanse.'},
+  '2026-06-20':{lbl:'🏁 Lillehammerlekene',short:'Lillehammerlekene',info:'100m + 200m. Første dobbel i sesongen.'},
+  '2026-06-24':{lbl:'🏁 Boysen Memorial Bislett',short:'Boysen Memorial',info:'200m. To dagar etter Lillehammer — spar energi.'},
+  '2026-07-08':{lbl:'🏁 Joensuu Finland',short:'Joensuu — 200m',info:'200m.'},
+  '2026-07-12':{lbl:'🏁 Tampere Finland',short:'Tampere — 100m',info:'100m. Fire dagar etter Joensuu.'},
+  '2026-07-23':{lbl:'🏆 NM Trondheim',short:'NM Trondheim',main:true,info:'100m + 200m. HOVUDMÅL #1. (23.–25. juli)'},
+  '2026-08-22':{lbl:'🏁 NM Stafetter Moelven',short:'NM Stafetter',info:'4×100m.'},
+  '2026-08-23':{lbl:'🏁 Mjøssprinten',short:'Mjøssprinten',usikker:true,info:'100m/200m. Avgjer fredag 21/8 etter forma.'},
+  '2026-08-28':{lbl:'🏆 Jr. NM Oslo',short:'Jr. NM Oslo',main:true,info:'100m + 200m. HOVUDMÅL #2. (28.–30. aug)'},
 };
 
 // Dato-spesifikke fly 30m-tekstar (Endring 1)
@@ -721,7 +725,7 @@ function buildTrainHTML(ds){
   const rc  = RACES[ds];
   let h = '';
   if(ph) h += `<span class="ptag ${ph.t}">${ph.n}</span><br>`;
-  if(rc) h += `<div class="tblk tb-stevne"><div class="tblk-lbl">${rc.lbl}</div>${rc.info}</div>`;
+  if(rc) h += `<div class="tblk ${rc.c||'tb-stevne'}"><div class="tblk-lbl">${rc.lbl}</div>${rc.info}</div>`;
   if(dow===2 || dow===6) h += INTENSITY_BOX;
   ti.blocks.forEach(b=>{ h += `<div class="tblk ${b.cls}"><div class="tblk-lbl">${b.lbl}</div>${b.html}</div>`; });
   return h || '<div class="empty">Ingen treningsdata</div>';
@@ -751,13 +755,28 @@ function renderWeek(){
     let cls = 'dc';
     if(isT) cls+=' today';
     else if(isL) cls+=' logged';
-    else if(isR) cls+=' race';
+    if(rc){
+      if(rc.main) cls+=' race-main';
+      else if(rc.usikker) cls+=' race-usikker';
+      else cls+=' race';
+    }
     const chk = isL ? '<span style="color:var(--green);margin-left:3px">✓</span>' : '';
+    let raceHtml = '';
+    if(rc){
+      const sn = rc.short || rc.lbl.replace(/^[🏁🏆]\s*/,'');
+      if(rc.main){
+        raceHtml = `<div style="font-size:11px;font-weight:700;background:#EF4444;color:#fff;border-radius:4px;padding:2px 7px;margin-bottom:4px;display:inline-block">🏆 ${sn}</div>`;
+      } else if(rc.usikker){
+        raceHtml = `<div style="font-size:11px;font-weight:700;color:#92400E;background:#FEF3C7;border-radius:4px;padding:2px 7px;margin-bottom:4px;display:inline-block">🏁 ${sn} <span style="font-weight:400;font-size:10px">(usikker)</span></div>`;
+      } else {
+        raceHtml = `<div style="font-size:11px;font-weight:700;color:#DC2626;background:#FEE2E2;border-radius:4px;padding:2px 7px;margin-bottom:4px;display:inline-block">🏁 ${sn}</div>`;
+      }
+    }
     h += `<div class="${cls}" onclick="openModal('${ds}')">
       <div class="dc-h"><span>${DNS[dow]}${chk}</span><span class="dc-date">${fmtShort(d)}</span></div>
       <div class="dc-b">
-        ${ph?`<div style="font-size:10px;color:var(--text2);margin-bottom:3px">${ph.n}</div>`:''}
-        ${rc?`<div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:2px">🏁 Stevne</div>`:''}
+        ${ph?`<div style="font-size:10px;color:var(--text2);margin-bottom:4px">${ph.n}</div>`:''}
+        ${raceHtml}
         <span class="dot ${ti.dot}"></span>${ti.short}
       </div>
     </div>`;
