@@ -400,6 +400,40 @@ const RACES = {
   '2026-08-28':{lbl:'🏆 Jr. NM Oslo',info:'100m + 200m. HOVUDMÅL #2. (28.–30. aug)'},
 };
 
+// Dato-spesifikke fly 30m-tekstar (Endring 1)
+const FLY30_DATES = {
+  '2026-04-14':'5–6 × flying 30m frå 20–25m innløp, ~86–88%. Pause 5–6 min. Treningssko. Hamstring: stopp om det strammer.',
+  '2026-04-21':'4–5 × flying 30m frå 25–28m innløp, ~89–91%. Pause 7 min. Piggsko om hamstring er ok.',
+  '2026-04-28':'4 × flying 30m frå 30m innløp, ~92–93%. Pause 8 min. Piggsko.',
+  '2026-05-05':'4 × flying 30m frå 30m innløp, ~93–94%. Pause 8–9 min. Piggsko.',
+  '2026-05-12':'3–4 × flying 30m frå 30–35m innløp, ~94–95%. Pause 9 min. Piggsko. Siste harde fartøkt.',
+  '2026-05-19':'3 × flying 30m frå 32–35m innløp, ~94–95%. Pause 9 min. Piggsko. Kortare enn vanleg — hald forma til TMG.',
+  '2026-06-02':'3–4 × flying 30m frå 30m innløp, ~93–94%. Pause 8–9 min. Piggsko.',
+  '2026-06-09':'4 × flying 30m frå 30–32m innløp, ~94–95%. Pause 9 min. Piggsko.',
+  '2026-06-16':'3 × flying 30m frå 30m innløp, ~93–94%. Pause 8–9 min. Kortare — Lillehammer neste veke.',
+  '2026-06-30':'5–6 × flying 30m frå 25m innløp, ~89–90%. Pause 6 min. Reload — kjenn at bena er friske att.',
+  '2026-07-14':'3–4 × flying 30m frå 30m innløp, ~93–94%. Pause 8–9 min. Piggsko.',
+  '2026-07-21':'3 × flying 30m frå 32–35m innløp, ~94–95%. Pause 9 min. Siste kvalitetsøkt før NM.',
+  '2026-08-04':'5–6 × flying 30m frå 25m innløp, ~89–90%. Pause 6 min. Gradvis tilbake etter NM.',
+  '2026-08-11':'4 × flying 30m frå 30m innløp, ~93–94%. Pause 8–9 min. Piggsko.',
+  '2026-08-18':'3 × flying 30m frå 32–35m innløp, ~94–95%. Pause 9 min. Piggsko.',
+  '2026-08-25':'3 × flying 30m frå 30m innløp, ~93–94%. Pause 8–9 min. Siste kvalitetsøkt før Jr. NM.',
+};
+
+// Dato-spesifikke laurdagsøkter (Endring 2)
+const RYTME_DATES = {
+  '2026-04-11':'3 × 100m i 78–80%. Treningssko. Pause 5–6 min. Kjenn kroppen, ingen krav.',
+  '2026-04-18':'200m – 150m – 100m i 82–85%. Treningssko.<br>Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Fokus på rytme heile vegen.',
+  '2026-04-25':'Pyramide ned: 250m – 200m – 150m – 100m i 85–88%. Piggsko.<br>Pause etter 250m: 11–12 min. Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Start roleg på 250m — farten kjem naturleg nedover.',
+  '2026-05-02':'200m – 150m – 100m i 89–92%. Piggsko.<br>Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Fart kjem naturleg — ikkje press.',
+  '2026-05-09':'Pyramide ned: 250m – 200m – 150m – 100m i 89–92%. Piggsko.<br>Pause etter 250m: 11–12 min. Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.',
+  '2026-05-16':'200m – 150m – 100m i 91–93%. Piggsko.<br>Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Siste store rytmeveke.',
+  '2026-05-23':'150m – 100m – 60m i nær racefart (~94–95%). Piggsko.<br>Pause etter 150m: 7–8 min. Pause etter 100m: 5–6 min.<br>Lett og skarp — spar til TMG.',
+  '2026-06-13':'Pyramide ned: 250m – 200m – 150m – 100m i 90–93%. Piggsko.<br>Pause etter 250m: 11–12 min. Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.',
+  '2026-08-08':'200m – 150m – 100m i 88–90%. Treningssko.<br>Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Lett og rytmisk — gradvis tilbake etter NM.',
+  '2026-08-15':'Pyramide ned: 250m – 200m – 150m – 100m i 91–94%. Piggsko.<br>Pause etter 250m: 11–12 min. Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Siste skikkelege rytmeøkt.',
+};
+
 const MACROS = {
   1:{p:185,k:270,f:55,kc:2380},
   2:{p:210,k:310,f:52,kc:2540},
@@ -516,7 +550,7 @@ function getTrainInfo(dow, ds){
     ]},
     2:{type:'trening',short:'Flying 30m'+(kamel?' + kamel':''),dot:'dot-t',blocks:[
       {cls:'tb-fart',lbl:'Fartøkt (18:30–20:30)',html:
-        '<b>Flying 30m:</b> 3–4 reps frå 30m innløp, nær maks. Pause 8–9 min.<br><br>'+
+        '<b>Flying 30m:</b> '+(FLY30_DATES[ds]||'3–4 × flying 30m frå 30m innløp, nær maks. Pause 8–9 min. Piggsko.')+'<br><br>'+
         (kamel
           ? '<b>Kamel (maks 2 reps alltid):</b> 15m aks + 20m flyt + 20m reaktivering. Pause 10 min mellom reps. Fokus: kjenn flytfasen, ikkje presse tid.'
           : '<i style="color:#9CA3AF">Kamel kjem inn frå 5. mai — ingen kamel enno.</i>')}
@@ -536,7 +570,7 @@ function getTrainInfo(dow, ds){
         '<span style="background:#EDE9FE;color:#5B21B6;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700">30m</span> 2 reps — full akselerasjonsfase med naturleg oppreising'},
       {cls:tau?'tb-blokk':'tb-kvile',lbl:'Hoppetau'+(tau?' (inne)':' (ute frå 18. mai)'),html:
         tau
-          ? '2–3 × 20m — høg hofte, kneløft, timing i isett. 1 rotasjon = 1 steg.'
+          ? '2–3 × 40–60m — høg hofte, kneløft, timing i isett. 1 rotasjon = 1 steg.'
           : '<s>Hoppetau inne</s> — ute frå 18. mai, kuttar inne for å lette belastninga.'},
       {cls:'tb-blokk',lbl:'Hekkedrills',html:'A-skip · B-skip over låge hekkar'},
       {cls:'tb-blokk',lbl:'Spenst',html:'Lave hink flatt 3×6 · Boks-eksplosivhopp til stavmadrass 3×5–6 (kontrollert landing)'},
@@ -550,10 +584,11 @@ function getTrainInfo(dow, ds){
     ]},
     6:{type:'trening',short:'Rytmeøkt',dot:'dot-t',blocks:[
       {cls:'tb-rytme',lbl:'Rytmeøkt (11:00–13:00)',html:
-        '<b>Vekslar kvar veke:</b><br>'+
-        '• <b>Pyramide ned:</b> 250→200→150→100m i 85–94 %. Pause 8–10 min. Start kontrollert — farten kjem av seg sjølv.<br>'+
-        '• <b>Nedtrapp:</b> 200→150→100m i 88–93 %. Lang pause. Kjenn at farten kjem naturleg.<br>'+
-        'Piggsko. Fokus: rytme og form, ikkje maks-press.'}
+        RYTME_DATES[ds]||
+        ('<b>Vekslar kvar veke:</b><br>'+
+        '• <b>Pyramide ned:</b> 250→200→150→100m i 85–94 %. Start roleg — farten kjem naturleg nedover.<br>'+
+        '• <b>Nedtrapp:</b> 200→150→100m i 88–93 %. Lang pause mellom drag.<br>'+
+        'Piggsko. Fokus: rytme og form, ikkje maks-press.')}
     ]},
   };
   return M[dow]||M[0];
@@ -607,6 +642,18 @@ function renderToday(){
   document.getElementById('tdKostB').innerHTML  = buildMealHTML(dow, ds);
 }
 
+const INTENSITY_BOX =
+  '<div class="tblk tb-kvile" style="font-size:11px;margin-bottom:10px">'+
+  '<div class="tblk-lbl">Intensitetsguide</div>'+
+  '<b>Fly 30m — volum og pause:</b><br>'+
+  '86–90%: 5–6 reps · pause 5–6 min · innløp 20–25m<br>'+
+  '91–93%: 4–5 reps · pause 7–8 min · innløp 28–30m<br>'+
+  '94–95%: 3–4 reps · pause 8–9 min · innløp 30–35m<br><br>'+
+  '<b>Rytmedrag — pause per distanse:</b><br>'+
+  '100m: pause 5–6 min &nbsp;·&nbsp; 150m: pause 7–8 min<br>'+
+  '200m: pause 9–10 min &nbsp;·&nbsp; 250m: pause 11–12 min'+
+  '</div>';
+
 function buildTrainHTML(ds){
   const d   = parseDS(ds);
   const dow = d.getDay();
@@ -616,6 +663,7 @@ function buildTrainHTML(ds){
   let h = '';
   if(ph) h += `<span class="ptag ${ph.t}">${ph.n}</span><br>`;
   if(rc) h += `<div class="tblk tb-stevne"><div class="tblk-lbl">${rc.lbl}</div>${rc.info}</div>`;
+  if(dow===2 || dow===6) h += INTENSITY_BOX;
   ti.blocks.forEach(b=>{ h += `<div class="tblk ${b.cls}"><div class="tblk-lbl">${b.lbl}</div>${b.html}</div>`; });
   return h || '<div class="empty">Ingen treningsdata</div>';
 }
