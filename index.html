@@ -354,6 +354,28 @@ textarea.fi{resize:vertical;min-height:54px;}
   </div>
 
   <div class="sc">
+    <div class="sc-h">OpenWeatherMap API-nøkkel</div>
+    <div class="ks" id="weatherKeyStatus">Ingen nøkkel lagra</div>
+    <p class="sc-note">Gratis på openweathermap.org — aktiv etter ~10 min</p>
+    <input class="fi" type="password" id="weatherKeyIn" placeholder="abc123...">
+    <div class="brow">
+      <button class="btn btn-dark" onclick="saveWeatherKey()">Lagre nøkkel</button>
+      <button class="btn btn-red" onclick="deleteWeatherKey()">Slett</button>
+    </div>
+  </div>
+
+  <div class="sc">
+    <div class="sc-h">Google Kalender</div>
+    <div class="ks" id="gcalStatus">Ikkje kopla til</div>
+    <p class="sc-note">Google Calendar Client ID — lag i Google Cloud Console → APIs → Calendar API → OAuth 2.0</p>
+    <input class="fi" type="text" id="gcalClientIdIn" placeholder="123456789.apps.googleusercontent.com">
+    <div class="brow">
+      <button class="btn btn-dark" onclick="saveGcalClientId()">Lagre Client ID</button>
+      <button class="btn btn-sec" onclick="googleLogin()" style="background:#34a853;color:#fff;border:none">Koble til Google Kalender 📅</button>
+    </div>
+  </div>
+
+  <div class="sc">
     <div class="sc-h">Farlege val</div>
     <p class="sc-note">Sletting kan ikkje angrast.</p>
     <div class="brow">
@@ -376,6 +398,47 @@ textarea.fi{resize:vertical;min-height:54px;}
 </div>
 
 <script>
+// ============================================================
+// VÊR + KALENDER
+// ============================================================
+async function fetchWeather(){
+  const wkey=localStorage.getItem('filip_weather_key');
+  if(!wkey) return null;
+  try{
+    const res=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=60.3913&lon=5.3221&appid=${wkey}&units=metric&lang=no`);
+    const d=await res.json();
+    if(!d.main) return null;
+    return{temp:Math.round(d.main.temp),feels:Math.round(d.main.feels_like),desc:d.weather[0].description,wind:Math.round(d.wind.speed),humidity:d.main.humidity};
+  }catch(e){return null;}
+}
+
+async function fetchCalendarEvents(){
+  const token=localStorage.getItem('filip_gcal_token');
+  if(!token) return null;
+  try{
+    const now=new Date();
+    const weekLater=new Date(now.getTime()+7*24*60*60*1000);
+    const res=await fetch(
+      `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${now.toISOString()}&timeMax=${weekLater.toISOString()}&singleEvents=true&orderBy=startTime&maxResults=5`,
+      {headers:{Authorization:`Bearer ${token}`}}
+    );
+    const data=await res.json();
+    if(data.error) return null;
+    return data.items?.map(e=>`${e.summary} — ${e.start.dateTime||e.start.date}`).join('\n')||'';
+  }catch(e){return null;}
+}
+
+function googleLogin(){
+  const cid=localStorage.getItem('filip_gcal_client_id')||'';
+  if(!cid){alert('Legg inn Google Calendar Client ID i innstillingar fyrst.');return;}
+  const scope='https://www.googleapis.com/auth/calendar.readonly';
+  const uri=window.location.href.split('?')[0].split('#')[0];
+  window.location.href=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${cid}&redirect_uri=${encodeURIComponent(uri)}&response_type=token&scope=${encodeURIComponent(scope)}`;
+}
+
+// Fang opp OAuth token etter redirect
+(()=>{const h=window.location.hash;if(h.includes('access_token')){const t=new URLSearchParams(h.slice(1)).get('access_token');if(t){localStorage.setItem('filip_gcal_token',t);window.location.hash='';}}})();
+
 // ============================================================
 // CONSTANTS
 // ============================================================
@@ -1001,19 +1064,22 @@ async function sendAI(){
         'content-type':'application/json',
         'x-api-key':key,
         'anthropic-version':'2023-06-01',
+        'anthropic-beta':'web-search-2025-03-05',
         'anthropic-dangerous-direct-browser-access':'true'
       },
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:1024,
         system:buildSysPrompt(),
+        tools:[{type:'web_search_20250305',name:'web_search'}],
         messages:chatHist.filter(m=>m.role==='user'||m.role==='assistant').slice(-20)
       })
     });
     loadEl.remove();
     if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${res.status}`);}
     const data=await res.json();
-    addAIMsg('assistant',data.content[0].text);
+    const reply=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Beklagar, fekk ikkje svar.';
+    addAIMsg('assistant',reply);
   }catch(e){
     loadEl.remove();
     addAIMsg('assistant',`Feil: ${e.message}`);
@@ -1044,6 +1110,40 @@ function saveKeySettings(){
 function deleteKeySettings(){
   if(!confirm('Slett API-nøkkel?')) return;
   localStorage.removeItem('filip_claude_key'); renderKeyStatus();
+}
+
+function saveWeatherKey(){
+  const k=document.getElementById('weatherKeyIn').value.trim();
+  if(!k){alert('Lim inn OpenWeatherMap-nøkkel');return;}
+  localStorage.setItem('filip_weather_key',k);
+  document.getElementById('weatherKeyIn').value='';
+  renderWeatherKeyStatus(); alert('OpenWeatherMap-nøkkel lagra ✓');
+}
+function deleteWeatherKey(){
+  if(!confirm('Slett OpenWeatherMap-nøkkel?')) return;
+  localStorage.removeItem('filip_weather_key'); renderWeatherKeyStatus();
+}
+function renderWeatherKeyStatus(){
+  const el=document.getElementById('weatherKeyStatus'); if(!el) return;
+  const k=localStorage.getItem('filip_weather_key');
+  el.textContent=k?`Nøkkel lagra: ${k.slice(0,8)}…`:'Ingen nøkkel lagra';
+  el.style.color=k?'var(--green-text)':'var(--text2)';
+}
+function saveGcalClientId(){
+  const k=document.getElementById('gcalClientIdIn').value.trim();
+  if(!k){alert('Lim inn Client ID');return;}
+  localStorage.setItem('filip_gcal_client_id',k);
+  document.getElementById('gcalClientIdIn').value='';
+  renderGcalStatus(); alert('Google Calendar Client ID lagra ✓');
+}
+function renderGcalStatus(){
+  const el=document.getElementById('gcalStatus'); if(!el) return;
+  const token=localStorage.getItem('filip_gcal_token');
+  const cid=localStorage.getItem('filip_gcal_client_id');
+  if(token) el.textContent='✓ Google Kalender kopla til';
+  else if(cid) el.textContent='Client ID lagra — trykk "Koble til" for å autorisere';
+  else el.textContent='Ikkje kopla til';
+  el.style.color=token?'var(--green-text)':'var(--text2)';
 }
 
 function exportLogs(){
@@ -1199,11 +1299,57 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 // ============================================================
+// MORGONBRIEFING
+// ============================================================
+async function morningBriefing(){
+  const now=new Date();
+  const hour=now.getHours();
+  const today=toDS(now);
+  if(hour<6||hour>=10) return;
+  if(localStorage.getItem('filip_last_briefing')===today) return;
+  const key=localStorage.getItem('filip_claude_key');
+  if(!key) return;
+  localStorage.setItem('filip_last_briefing',today);
+
+  const weather=await fetchWeather();
+  const weatherText=weather?`Vêret i Bergen: ${weather.temp}°C, ${weather.desc}, vind ${weather.wind} m/s.`:'';
+  const calEvents=await fetchCalendarEvents();
+  const calText=calEvents?`\nKalender neste 7 dagar:\n${calEvents}`:'';
+
+  const trainText=document.getElementById('tdTrainB')?.innerText?.slice(0,400)||'';
+  const kostText=document.getElementById('tdKostB')?.innerText?.slice(0,200)||'';
+
+  const prompt=`Gi ein kort og engasjerande god morgon-hilsen til Filip. Bruk ALDRI meir enn 4–5 setningar totalt.
+Inkluder: 1) Personleg hilsen med namn. 2) Kort om dagens trening (intensitet og fokus). 3) Eitt kosthaldsråd for dagen.${weatherText?' 4) '+weatherText:''}${calText?' 5) Relevante kalender-hendingar.':''}
+Ver positiv, direkte og coach-aktig. Snakk nynorsk.
+TRENINGSDATA: ${trainText}
+KOSTPLAN: ${kostText}${calText}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:buildSysPrompt(),messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    const reply=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'';
+    if(reply){
+      addAIMsg('assistant','🌅 '+reply);
+      nav(document.querySelector('[data-v="ai"]'));
+    }
+  }catch(e){console.log('Morgonbriefing feil:',e);}
+}
+
+// ============================================================
 // INIT
 // ============================================================
 renderToday();
 renderWeek();
 renderKost();
+renderKeyStatus();
+renderWeatherKeyStatus();
+renderGcalStatus();
+setTimeout(morningBriefing,1500);
 </script>
 </body>
 </html>
