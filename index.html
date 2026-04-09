@@ -458,8 +458,8 @@ const RYTME_DATES = {
   '2026-08-15':'Pyramide ned: 250m – 200m – 150m – 100m i 91–94%. Piggsko.<br>Pause etter 250m: 11–12 min. Pause etter 200m: 9–10 min. Pause etter 150m: 7–8 min.<br>Siste skikkelege rytmeøkt.',
 };
 
-// Tirsdagar veka etter helgestevne — feel-basert kamel
-const KAMEL_FEEL_DATES = new Set(['2026-06-02','2026-06-09','2026-06-23','2026-07-29']);
+// Tirsdagar etter helgestevne — fly feel-basert, kamel prioritert
+const KAMEL_FEEL_DATES = new Set(['2026-06-23','2026-07-28','2026-08-12']);
 
 // Onsdagar i intensiv stevneperiode — styrke-utfasing
 const STYRKE_LYTT_DATES = new Set(['2026-06-24','2026-07-01','2026-07-08']);
@@ -600,14 +600,14 @@ function getTrainInfo(dow, ds){
         (kamel
           ? '<b>Kamel (maks 2 reps alltid):</b> 15m aks + 20m flyt + 20m reaktivering. Pause 10 min mellom reps. Fokus: kjenn flytfasen, ikkje presse tid.'
           : '<i style="color:#9CA3AF">Kamel kjem inn frå 5. mai — ingen kamel enno.</i>')+
-        (KAMEL_FEEL_DATES.has(ds)?'<br><br><span style="background:#FEF3C7;color:#92400E;padding:2px 7px;border-radius:3px;font-size:11px">⚠ Kamel: feel-basert etter helgestevne — kjenn deg bra → 1 kamel, sliten → 0 kamel.</span>':'')}
+        (KAMEL_FEEL_DATES.has(ds)?'<br><br><span style="background:#FEF3C7;color:#92400E;padding:2px 7px;border-radius:3px;font-size:11px;display:block">⚠ <b>Fly: feel-basert etter helgestevne</b> — kjenn deg bra → 3 reps på 95%, sliten → dropp fly heilt.<br><b>Kamel: køyr 2 × kamel uansett</b> — god nervesystem-timing på trøtt kropp.</span>':'')}
     ]},
     3:{type:'styrke',short:'Styrke',dot:'dot-s',blocks:sp?[
       {cls:'tb-styrke',lbl:'Styrke (18:30–20:00)',html:
         `<b>Smith SL-squat:</b> ${sp.sets} eksplosivt opp — <i>${sp.note}</i><br>`+
         '<b>Heelboks hip ext:</b> Hæl på boks over hoftenivå, vekt på hofte, kontrollert ned — proksimal hamstring + glute<br>'+
         '<b>Isometrisk calf raise i stang:</b> Hold 5–8 sek × 5 kvar side'+
-        (STYRKE_LYTT_DATES.has(ds)?'<br><br><span style="background:#FEF3C7;color:#92400E;padding:2px 7px;border-radius:3px;font-size:11px">⚠ Lyt til kroppen: om styrken tappar meir enn den gir i denne perioden, drop heile styrkeøkta og ta aktiv kvile eller mobilitet i staden.</span>':'')}
+        (STYRKE_LYTT_DATES.has(ds)?'<br><br><span style="background:#FEF3C7;color:#92400E;padding:2px 7px;border-radius:3px;font-size:11px;display:block">⚠ Lyt til kroppen: om styrken tappar meir enn den gir i denne perioden — drop heile styrkeøkta og ta aktiv kvile eller mobilitet i staden. Spesielt viktig om du har løpt stevne helga før.</span>':'')}
     ]:[
       {cls:'tb-kvile',lbl:'Ingen styrke enno',html:'Styrketrening startar gradvis frå 20. april etter landing frå leir.'}
     ]},
