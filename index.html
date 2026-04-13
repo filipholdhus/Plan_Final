@@ -1017,17 +1017,6 @@ function renderToday(){
   document.getElementById('tdKostB').innerHTML  = buildMealHTML(dow, ds);
 }
 
-const INTENSITY_BOX =
-  '<div class="tblk tb-kvile" style="font-size:11px;margin-bottom:10px">'+
-  '<div class="tblk-lbl">Intensitetsguide</div>'+
-  '<b>Fly 30m — volum og pause:</b><br>'+
-  '86–90%: 5–6 reps · pause 5–6 min · innløp 20–25m<br>'+
-  '91–93%: 4–5 reps · pause 7–8 min · innløp 28–30m<br>'+
-  '94–95%: 3–4 reps · pause 8–9 min · innløp 30–35m<br><br>'+
-  '<b>Rytmedrag — pause per distanse:</b><br>'+
-  '100m: pause 5–6 min &nbsp;·&nbsp; 150m: pause 7–8 min<br>'+
-  '200m: pause 9–10 min &nbsp;·&nbsp; 250m: pause 11–12 min'+
-  '</div>';
 
 function buildTrainHTML(ds){
   const d   = parseDS(ds);
@@ -1038,7 +1027,6 @@ function buildTrainHTML(ds){
   let h = '';
   if(ph) h += `<span class="ptag ${ph.t}">${ph.n}</span>${ph.note?`<div style="font-size:10px;color:#92400E;background:#FEF3C7;border-radius:4px;padding:3px 8px;margin-bottom:6px">⚠ ${ph.note}</div>`:'<br>'}`;
   if(rc) h += `<div class="tblk ${rc.c||'tb-stevne'}"><div class="tblk-lbl">${rc.lbl}</div>${rc.info}</div>`;
-  if(dow===2 || dow===6) h += INTENSITY_BOX;
   ti.blocks.forEach(b=>{ h += `<div class="tblk ${b.cls}"><div class="tblk-lbl">${b.lbl}</div>${b.html}</div>`; });
   return h || '<div class="empty">Ingen treningsdata</div>';
 }
