@@ -874,39 +874,60 @@ function getTrainInfo(dow, ds){
   torBlocks.push({cls:'tb-blokk',lbl:'Hekkedrills',html:'A-skip · B-skip over låge hekkar'});
   if(spenst) torBlocks.push({cls:'tb-blokk',lbl:'Spenst',html:spenst});
 
-  const M = {
-    0:{type:'kvile',short:'Kvile',dot:'dot-k',blocks:[
-      {cls:'tb-kvile',lbl:'Kvile',html:'Fullstendig kvile. Restitusjon og mental avkopling.'}
-    ]},
-    1:{type:'styrke',short:'Core + overkropp + mobilitet (18:30)',dot:'dot-s',blocks:[
-      {cls:'tb-styrke',lbl:'Core + overkropp (18:30–20:00)',html:
-        'Core A (odde veker): Pallof press 3×8 · Medisinball rotasjon 3×8 · Russian twist 3×10<br>Core B (partalsveker): Dead bug 3×8 · Farmers carry 2×20m · Hollow body 3×20 sek<br>Overkropp: Dips 3×6–8 · Brutal benk 3×5–6 · Skulderpress 2×8<br>Rygghev 3×10 · Sidehev i ryggstativ 3×10'},
-      {cls:'tb-mob',lbl:'Mobilitet etter (15 min)',html:
-        '90/90 hofterotasjon 5 min · Hip CARs 5 reps · Couch stretch 2 min · Pigeon pose 90 sek · Glute-bridge med 3 sek pause 2×10'}
-    ]},
-    2:{type:'trening',short:'Flying 30m'+(kamel?' + kamel':''),dot:'dot-t',blocks:[
-      {cls:'tb-fart',lbl:'Fartøkt (18:30–20:30)',html:'<b>Flying 30m:</b> '+flyTxt+kamelTxt}
-    ]},
-    3:{type:'styrke',short:'Styrke',dot:'dot-s',blocks:sp?[
-      {cls:'tb-styrke',lbl:`Styrke (18:30–20:00) — ${sp.note}`,html:sp.html+styrkeNote}
-    ]:[
-      {cls:'tb-kvile',lbl:'Ingen styrke enno',html:'Styrketrening startar gradvis frå 22. april.'}
-    ]},
-    4:{type:'trening',short:'Blokkøkt',dot:'dot-t',blocks:torBlocks},
-    5:{type:'mob',short:'Full mobilitet (30–40 min)',dot:'dot-k',blocks:[
-      {cls:'tb-mob',lbl:'Full mobilitet (30–40 min)',html:
-        '90/90 hofterotasjon 8–10 min · Hip CARs 8 reps · Pigeon 2 min · Couch stretch 2 min<br>Hamstring PNF kontrakt-relax 3 reps · Piriformis/figure-4 2 min<br>Gastrocnemius 90 sek · Soleus 90 sek · Ankelrotasjonar<br>Glute-bridge med 3 sek pause 3×10 · Thorax-rotasjon 10 kvar side'}
-    ]},
-    6:{type:'trening',short:'Rytmeøkt',dot:'dot-t',blocks:[
-      {cls:'tb-rytme',lbl:'Rytmeøkt (11:00–13:00)',html:
-        RYTME_DATES[ds]||
-        ('<b>Vekslar kvar veke:</b><br>'+
-        '• <b>Pyramide ned:</b> 250→200→150→100m i 85–94 %. Start roleg — farten kjem naturleg nedover.<br>'+
-        '• <b>Nedtrapp:</b> 200→150→100m i 88–93 %. Lang pause mellom drag.<br>'+
-        'Piggsko. Fokus: rytme og form, ikkje maks-press.')}
-    ]},
-  };
-  return M[dow]||M[0];
+  if(dow===0) return {type:'kvile',short:'Kvile',dot:'dot-k',blocks:[
+    {cls:'tb-kvile',lbl:'Kvile',html:'Fullstendig kvile. Restitusjon og mental avkopling.'}
+  ]};
+
+  if(dow===1) return {type:'styrke',short:'Core + overkropp + mobilitet (18:30)',dot:'dot-s',blocks:[
+    {cls:'tb-styrke',lbl:'Core (vekslar kvar veke)',html:
+      '<b>Odde veker — Core A:</b><br>Pallof press 3×8 kvar side — stå stille, kjenn rotasjonsmotstand gjennom kjernen<br>Medisinball rotasjon mot vegg 3×8 kvar side — eksplosivt<br>Russian twist 3×10 — kontrollert, roter heilt til sida<br><br><b>Partalsveker — Core B:</b><br>Dead bug 3×8 — press korsryggen mot golvet, senk motsett arm+bein sakte<br>Farmers carry 2×20m — tung, rett rygg, skulder ned og bak<br>Hollow body hold 3×20 sek — flat rygg, bein og armar strekte'},
+    {cls:'tb-styrke',lbl:'Overkropp eksplosiv',html:
+      '<b>Dips 3×6–8</b> — full ROM, kontrollert ned, eksplosivt opp. Legg vekt i belte om det er lett.<br><b>Brutal benk 3×5–6</b> — smal grep, albogane inn, eksplosivt press<br><b>Skulderpress 2×8</b> — stståande eller sittande, kontrollert ned'},
+    {cls:'tb-styrke',lbl:'Rygg og hofter',html:
+      '<b>Rygghev i stativ 3×10</b> — eksentrisk kontroll ned (3 sek), eksplosivt opp. Kjenn hamstring og glute.<br><b>Sidehev i ryggstativ 3×10 kvar side</b> — hofteabduktor og gluteus medius. Hald 1 sek på topp.'},
+    {cls:'tb-mob',lbl:'Mobilitet etter (15 min)',html:
+      '<b>90/90 hofterotasjon</b> 5 min — begge retningar, flytt deg gjennom variasjoner<br><b>Hip CARs</b> 5 reps kvar side — full rotasjon i hofteleddet, kontrollert<br><b>Couch stretch</b> 2 min kvar side — hofteleddsbøyar mot vegg<br><b>Pigeon pose</b> 90 sek kvar side — djup utadrotator<br><b>Glute-bridge med 3 sek pause</b> 2×10 — kjenn sete og hamstring aktivere saman'}
+  ]};
+
+  if(dow===2) return {type:'trening',short:'Flying 30m'+(kamel?' + kamel':''),dot:'dot-t',blocks:[
+    {cls:'tb-fart',lbl:'Fartøkt (18:30–20:30)',html:'<b>Flying 30m:</b> '+flyTxt+kamelTxt}
+  ]};
+
+  if(dow===3) return {type:'styrke',short:'Styrke onsdag (18:30) — lett, ikkje på kostnad av torsdag',dot:'dot-s',blocks:[
+    {cls:'tb-styrke',lbl:'Bein eksplosiv — Smith SL-squat',html:
+      '<b>Smith SL-squat 3×4–5 eksplosivt</b><br>Stå på eitt bein i Smith-stativ. Kontrollert ned (2 sek), eksplosivt opp.<br>Fokus: kne over tå, hofte bak, ikkje la korsryggen runde.<br>Vekt: lett nok til at du er eksplosiv — ikkje styrketrening til utmatting.'},
+    {cls:'tb-styrke',lbl:'Hamstring og Akilles — skadeførebygging',html:
+      '<b>Heelboks hip ext 3×6–8</b><br>Ligg på rygg, hæl på boks over hoftenivå, vekt på hofta. Press hofte opp, kjenn proksimal hamstring og glute jobbe saman. Kontrollert ned (3 sek).<br><br><b>Isometrisk einbeins calf raise i stang 3×5 sek ×4</b><br>Stå på eitt bein, hald i stang for balanse. Gå opp på tå og HOLD 5–8 sek. Kjenn Akilles-senen jobbe isometrisk. Kritisk for skadeførebygging.'},
+    {cls:'tb-styrke',lbl:'Overkropp — Brutal benk',html:
+      '<b>Brutal benk 3×5–6</b><br>Smal grep, albogane inn langs kroppen. Senk kontrollert (2 sek), eksplosivt press opp.<br>Belastar ikkje beina — trygg å køyre onsdag.'},
+    {cls:'tb-styrke',lbl:'Rygg og stabilitet',html:
+      '<b>Rygghev i stativ 3×8–10</b><br>Eksentrisk kontroll ned (3 sek), eksplosivt opp. Kjenn hamstring og glute.<br><br><b>Sidehev i ryggstativ 3×8–10 kvar side</b><br>Hofteabduktor og gluteus medius. Hald 1 sek på topp. Viktig for springstabilitet og knetracking.'},
+    {cls:'tb-styrke',lbl:'Core (vekslar kvar veke)',html:
+      '<b>Odde veker — Pallof press 3×8 kvar side</b><br>Stå i sideretning til kabelmaskin/band. Press ut og hald 2 sek — kjenn anti-rotasjon gjennom kjernen.<br><br><b>Partalsveker — Dead bug 3×8</b><br>Ligg på rygg, press korsrygg mot golvet heile tida. Senk motsett arm og bein sakte mot golvet. Ikkje la ryggen løfte seg.'}
+  ]};
+
+  if(dow===4) return {type:'trening',short:'Blokkøkt',dot:'dot-t',blocks:torBlocks};
+
+  if(dow===5) return {type:'mob',short:'Full mobilitet (30–40 min)',dot:'dot-k',blocks:[
+    {cls:'tb-mob',lbl:'Hofte og hofteleddsbøyar',html:
+      '<b>90/90 hofterotasjon</b> 8–10 min — den viktigaste øvinga. Begge retningar, flytt deg gjennom variasjonar. Kjenn innadrotatoren og utadrotatoren.<br><b>Hip CARs</b> 8 reps kvar side — full aktiv rotasjon i hofteleddet, sakte og kontrollert<br><b>Couch stretch (hofteleddsbøyar)</b> 2 min kvar side — kne mot veggen, hofte framover<br><b>Hip flexor release mot vegg</b> 90 sek kvar side — ligg på rygg, strekk lårfronten'},
+    {cls:'tb-mob',lbl:'Hamstring og bak lår',html:
+      '<b>Hamstring PNF kontrakt-relax</b> 3 reps kvar side — kontrakter 6 sek, slapp av og gå djupare inn, hald 20 sek. Gjer 3 runder.<br><b>Piriformis / figure-4</b> 2 min kvar side — ligg på rygg, kryss eit bein over, dra begge mot brystet'},
+    {cls:'tb-mob',lbl:'Legg og ankel',html:
+      '<b>Gastrocnemius strekk</b> 90 sek kvar side — rett kne, hæl i golvet, tå mot vegg<br><b>Soleus strekk</b> 90 sek kvar side — bøyd kne, hæl i golvet. Viktig for Akilles.<br><b>Ankelrotasjonar</b> 10 reps kvar retning — full ROM, sakte og kontrollert'},
+    {cls:'tb-mob',lbl:'Aktivering og avslutning',html:
+      '<b>Glute-bridge med 3 sek pause på topp</b> 3×10 — kjenn at sete og hamstring aktiverer saman, ikkje korsrygg<br><b>Thorax-rotasjon sitjande</b> 10 reps kvar side — open opp brystkassen, roter frå midtryggen<br><b>Bensving framover/bakover</b> 10 reps kvar side — dynamisk, kontrollert amplitude'}
+  ]};
+
+  // Laurdag / fallback
+  return {type:'trening',short:'Rytmeøkt',dot:'dot-t',blocks:[
+    {cls:'tb-rytme',lbl:'Rytmeøkt (11:00–13:00)',html:
+      RYTME_DATES[ds]||
+      ('<b>Vekslar kvar veke:</b><br>'+
+      '• <b>Pyramide ned:</b> 250→200→150→100m i 85–94 %. Start roleg — farten kjem naturleg nedover.<br>'+
+      '• <b>Nedtrapp:</b> 200→150→100m i 88–93 %. Lang pause mellom drag.<br>'+
+      'Piggsko. Fokus: rytme og form, ikkje maks-press.')}
+  ]};
 }
 
 // ============================================================
