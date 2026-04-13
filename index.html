@@ -817,7 +817,42 @@ const TD = {
 '2026-08-30':{type:'trening',short:'🏆 Jr. NM dag 3',blocks:[{c:'tb-stevne',l:'🏆 Jr. NM Oslo dag 3',t:'Jr. NM Oslo dag 3. Sesongfinale.'}]},
 };
 
+const MANDAG_DATA = {
+  type:'styrke',short:'Overkropp + aktivering (18:30)',
+  blocks:[
+    {c:'tb-styrke',l:'Overkropp — 2–3 øvingar (primer CNS)',t:'<b>Dips 3×6–8</b> — full ROM, kontrollert ned, eksplosivt opp. Legg vekt i belte om det er lett.<br><b>Nedtrekk / pullups 3×6–8</b> — smalt eller breitt grep, full ROM<br><b>Skråbenk / brutal benk 3×5</b> (annakvar veke) — vekslar med pullups som tredje øving'},
+    {c:'tb-mob',l:'Aktivering fremside lår og hofteleddsbøyar — PRIORITET',t:'<b>Couch stretch</b> 2 min kvar side — kne mot vegg, hofte framover. Din viktigaste daglege øving.<br><b>Rectus femoris strekk</b> 90 sek kvar side — ligg på sida, ta tak i foten bak og dra mot setet<br><b>Hip flexor aktiv release</b> 10 reps kvar side — gå inn i strekk, kontrakter glute 3 sek, slapp av og gå djupare<br><b>Standing quad strekk</b> 60 sek kvar side — stå på eitt bein, dra foten mot setet'},
+    {c:'tb-mob',l:'Aktivering legg — dagleg arbeid',t:'<b>Gastrocnemius strekk</b> 90 sek kvar side — rett kne, hæl i golvet, tå mot vegg<br><b>Soleus strekk</b> 90 sek kvar side — bøyd kne, djupare legg og Akilles<br><b>Isometrisk calf raise hold</b> 3×8 sek kvar side — gå opp på tå og hald, aktiverer og strekkjer samstundes'},
+    {c:'tb-mob',l:'Glute-aktivering etter strekk',t:'<b>Glute-bridge med 3 sek pause</b> 3×10 — press korsrygg ned, kjenn sete aktivere (ikkje korsrygg)<br><b>Lateral band walk</b> 2×12 steg kvar veg — band rundt kne, aktiverer gluteus medius<br><b>Sidehev i ryggstativ 3×10 kvar side</b> — hofteabduktor og gluteus medius, hald 1 sek på topp'}
+  ]
+};
+
+const FREDAG_DATA = {
+  type:'mob',short:'Yoga + core (35–45 min)',
+  blocks:[
+    {c:'tb-mob',l:'Yoga — fremside lår og hofteleddsbøyar (25–30 min)',t:'<b>Couch stretch / yin</b> 3 min kvar side — djupaste hip flexor-strekk. Kne mot vegg, hofte framover, press aktivt.<br><b>Low lunge med bakover-bøy</b> 2 min kvar side — fremside lår + hip flexor kombinert, arm over hovudet<br><b>Rectus femoris yin</b> 2 min kvar side — ligg på magen, ta tak i foten bak og dra mot setet<br><b>Pyramid pose</b> 2 min kvar side — hamstring + kalv kombinert, rett rygg<br><b>Sleeping swan / pigeon</b> 3 min kvar side — djup utadrotator, piriformis<br><b>Supta baddha konasana</b> 3 min — ligg på rygg, fotsålar mot kvarandre, opnar inside lår og hofte<br><b>Legs up the wall</b> 3 min — passiv leggstrekk og betre sirkulasjon<br><b>Gastrocnemius PNF</b> 3 reps kvar side — kontrakter 6 sek, slapp av og gå djupare<br><b>Soleus yin</b> 2 min kvar side — bøyd kne, hæl i golvet, læn framover<br><b>90/90 hofterotasjon</b> 5 min — avslutning, begge retningar'},
+    {c:'tb-mob',l:'Core — vekslar kvar veke (10 min)',t:'<b>Odde veker — Rotasjon:</b><br>Medisinball rotasjon mot vegg 3×8 kvar side — eksplosivt kast, roter frå hofta<br>Russian twist med vekt 3×10 — roter heilt til sida, kontrollert<br>Birddog 3×8 kvar side — roter aldri, hald hoftene stabilt<br><br><b>Partalsveker — Stabilisering:</b><br>Dead bug 3×8 — press korsrygg mot golvet heile tida, senk arm+bein sakte<br>Hollow body hold 3×20 sek — flat rygg, ikkje løft ryggen frå golvet<br>Farmers carry 2×20m — tung, rett rygg, aktiverer deep core'},
+    {c:'tb-mob',l:'Aktivering — klar for helg',t:'<b>Glute-bridge med 3 sek pause</b> 3×10 — kjenn sete og hamstring aktivere saman<br><b>Bensving framover og bakover</b> 10 reps kvar side — dynamisk, kontrollert amplitude<br><b>Lateral band walk</b> 2×10 steg kvar veg — gluteus medius aktivering'}
+  ]
+};
+
+const SUNDAG_DATA = {type:'kvile',short:'Kvile',blocks:[{c:'tb-kvile',l:'Kvile',t:'Fullstendig kvile. Restitusjon og mental avkopling.'}]};
+
 function getTrainInfo(dow, ds){
+  // Måndag og fredag: alltid fullt program, aldri TD
+  if(dow===1) return {
+    type:MANDAG_DATA.type, short:MANDAG_DATA.short, dot:'dot-s',
+    blocks:MANDAG_DATA.blocks.map(b=>({cls:b.c,lbl:b.l,html:b.t}))
+  };
+  if(dow===5) return {
+    type:FREDAG_DATA.type, short:FREDAG_DATA.short, dot:'dot-k',
+    blocks:FREDAG_DATA.blocks.map(b=>({cls:b.c,lbl:b.l,html:b.t}))
+  };
+  if(dow===0) return {
+    type:SUNDAG_DATA.type, short:SUNDAG_DATA.short, dot:'dot-k',
+    blocks:SUNDAG_DATA.blocks.map(b=>({cls:b.c,lbl:b.l,html:b.t}))
+  };
+  // Andre dagar: sjekk TD fyrst
   if(ds && TD[ds]){
     const d = TD[ds];
     return {
@@ -874,21 +909,6 @@ function getTrainInfo(dow, ds){
   torBlocks.push({cls:'tb-blokk',lbl:'Hekkedrills',html:'A-skip · B-skip over låge hekkar'});
   if(spenst) torBlocks.push({cls:'tb-blokk',lbl:'Spenst',html:spenst});
 
-  if(dow===0) return {type:'kvile',short:'Kvile',dot:'dot-k',blocks:[
-    {cls:'tb-kvile',lbl:'Kvile',html:'Fullstendig kvile. Restitusjon og mental avkopling.'}
-  ]};
-
-  if(dow===1) return {type:'styrke',short:'Overkropp + aktivering (18:30)',dot:'dot-s',blocks:[
-    {cls:'tb-styrke',lbl:'Overkropp — 2–3 øvingar (primer CNS)',html:
-      '<b>Dips 3×6–8</b> — full ROM, kontrollert ned, eksplosivt opp. Legg vekt i belte om det er lett.<br><b>Nedtrekk / pullups 3×6–8</b> — smalt eller breitt grep, full ROM<br><b>Skråbenk / brutal benk 3×5</b> (annakvar veke) — vekslar med pullups som tredje øving'},
-    {cls:'tb-mob',lbl:'Aktivering fremside lår og hofteleddsbøyar — PRIORITET',html:
-      '<b>Couch stretch</b> 2 min kvar side — kne mot vegg, hofte framover. Din viktigaste daglege øving.<br><b>Rectus femoris strekk</b> 90 sek kvar side — ligg på sida, ta tak i foten bak og dra mot setet<br><b>Hip flexor aktiv release</b> 10 reps kvar side — gå inn i strekk, kontrakter glute 3 sek, slapp av og gå djupare<br><b>Standing quad strekk</b> 60 sek kvar side — stå på eitt bein, dra foten mot setet'},
-    {cls:'tb-mob',lbl:'Aktivering legg — dagleg arbeid',html:
-      '<b>Gastrocnemius strekk</b> 90 sek kvar side — rett kne, hæl i golvet, tå mot vegg<br><b>Soleus strekk</b> 90 sek kvar side — bøyd kne, djupare legg og Akilles<br><b>Isometrisk calf raise hold</b> 3×8 sek kvar side — gå opp på tå og hald, aktiverer og strekkjer samstundes'},
-    {cls:'tb-mob',lbl:'Glute-aktivering etter strekk',html:
-      '<b>Glute-bridge med 3 sek pause</b> 3×10 — press korsrygg ned, kjenn sete aktivere (ikkje korsrygg)<br><b>Lateral band walk</b> 2×12 steg kvar veg — band rundt kne, treng gluteus medius<br><b>Sidehev i ryggstativ 3×10 kvar side</b> — hofteabduktor og gluteus medius, hald 1 sek på topp'}
-  ]};
-
   if(dow===2) return {type:'trening',short:'Flying 30m'+(kamel?' + kamel':''),dot:'dot-t',blocks:[
     {cls:'tb-fart',lbl:'Fartøkt (18:30–20:30)',html:'<b>Flying 30m:</b> '+flyTxt+kamelTxt}
   ]};
@@ -905,13 +925,6 @@ function getTrainInfo(dow, ds){
   ]};
 
   if(dow===4) return {type:'trening',short:'Blokkøkt',dot:'dot-t',blocks:torBlocks};
-
-  if(dow===5) return {type:'mob',short:'Yoga + core (35–45 min)',dot:'dot-k',blocks:[
-    {cls:'tb-mob',lbl:'Yoga — fremside lår og hofteleddsbøyar (25–30 min)',html:
-      '<b>Couch stretch / yin</b> 3 min kvar side — djupaste hip flexor-strekk. Kne mot vegg, hofte framover, press aktivt.<br><b>Low lunge med bakover-bøy</b> 2 min kvar side — fremside lår + hip flexor kombinert, arm over hovudet<br><b>Rectus femoris yin</b> 2 min kvar side — ligg på magen, ta tak i foten bak og dra mot setet<br><b>Pyramid pose</b> 2 min kvar side — hamstring + kalv kombinert, rett rygg<br><b>Sleeping swan / pigeon</b> 3 min kvar side — djup utadrotator, piriformis<br><b>Supta baddha konasana</b> 3 min — ligg på rygg, fotsålar mot kvarandre, opnar inside lår og hofte<br><b>Legs up the wall</b> 3 min — passiv leggstrekk + reduserer hevelse i beina<br><b>Gastrocnemius PNF</b> 3 reps kvar side — kontrakt 6 sek, slapp av, gå djupare. Repeat.<br><b>Soleus yin</b> 2 min kvar side — bøyd kne, hæl i golvet, læn framover<br><b>90/90 hofterotasjon</b> 5 min — avslutning, begge retningar'},
-    {cls:'tb-mob',lbl:'Core — vekslar kvar veke (10 min)',html:
-      '<b>Odde veker — Rotasjon:</b><br>Medisinball rotasjon mot vegg 3×8 kvar side — eksplosivt kast, roter frå hofta<br>Russian twist med vekt 3×10 — roter heilt til sida, kontrollert<br>Birddog 3×8 kvar side — roter aldri, hald hoftene stabilt<br><br><b>Partalsveker — Stabilisering:</b><br>Dead bug 3×8 — press korsrygg mot golvet heile tida, senk arm+bein sakte<br>Hollow body hold 3×20 sek — flat rygg, ikkje løft ryggen frå golvet<br>Farmers carry 2×20m — tung, rett rygg, aktiverer deep core under belastning'}
-  ]};
 
   // Laurdag / fallback
   return {type:'trening',short:'Rytmeøkt',dot:'dot-t',blocks:[
