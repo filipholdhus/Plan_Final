@@ -878,13 +878,11 @@ function getTrainInfo(dow, ds){
     0:{type:'kvile',short:'Kvile',dot:'dot-k',blocks:[
       {cls:'tb-kvile',lbl:'Kvile',html:'Fullstendig kvile. Restitusjon og mental avkopling.'}
     ]},
-    1:{type:'styrke',short:'Core + overkropp',dot:'dot-s',blocks:[
+    1:{type:'styrke',short:'Core + overkropp + mobilitet (18:30)',dot:'dot-s',blocks:[
       {cls:'tb-styrke',lbl:'Core + overkropp (18:30–20:00)',html:
-        '<b>Overkropp:</b> Dips 3×6–8 · Benkpress/skråbenk 3×5 · Skulderpress 2×8<br>'+
-        '<b>Core A (odde veker):</b> Pallof press 3×8 · Medisinball rotasjon 3×8 · Russian twist 3×10<br>'+
-        '<b>Core B (partalsveker):</b> Dead bug 3×8 · Farmers carry 2×20m · Hollow body 3×20 sek'},
-      {cls:'tb-mob',lbl:'Mobilitet etterpå (15 min)',html:
-        '90/90 hofterotasjon 5 min · Hip CARs 5 reps · Couch stretch 2 min · Pigeon pose 90 sek · Glute-bridge 3 sek pause 2×10'}
+        'Core A (odde veker): Pallof press 3×8 · Medisinball rotasjon 3×8 · Russian twist 3×10<br>Core B (partalsveker): Dead bug 3×8 · Farmers carry 2×20m · Hollow body 3×20 sek<br>Overkropp: Dips 3×6–8 · Brutal benk 3×5–6 · Skulderpress 2×8<br>Rygghev 3×10 · Sidehev i ryggstativ 3×10'},
+      {cls:'tb-mob',lbl:'Mobilitet etter (15 min)',html:
+        '90/90 hofterotasjon 5 min · Hip CARs 5 reps · Couch stretch 2 min · Pigeon pose 90 sek · Glute-bridge med 3 sek pause 2×10'}
     ]},
     2:{type:'trening',short:'Flying 30m'+(kamel?' + kamel':''),dot:'dot-t',blocks:[
       {cls:'tb-fart',lbl:'Fartøkt (18:30–20:30)',html:'<b>Flying 30m:</b> '+flyTxt+kamelTxt}
@@ -895,12 +893,9 @@ function getTrainInfo(dow, ds){
       {cls:'tb-kvile',lbl:'Ingen styrke enno',html:'Styrketrening startar gradvis frå 22. april.'}
     ]},
     4:{type:'trening',short:'Blokkøkt',dot:'dot-t',blocks:torBlocks},
-    5:{type:'mob',short:'Mobilitet',dot:'dot-k',blocks:[
+    5:{type:'mob',short:'Full mobilitet (30–40 min)',dot:'dot-k',blocks:[
       {cls:'tb-mob',lbl:'Full mobilitet (30–40 min)',html:
-        '<b>Hofte:</b> 90/90 hofterotasjon 8–10 min · Hip CARs 8 reps kvar · Pigeon 2 min kvar · Hip flexor release mot vegg 90 sek kvar<br><br>'+
-        '<b>Hamstring:</b> PNF kontrakt-relax (kontrakter 6 sek, slapp av og dyp) 3 reps kvar · Piriformis/figure-4 2 min kvar<br><br>'+
-        '<b>Legg/ankel:</b> Gastrocnemius vegg 90 sek · Soleus knebøygd 90 sek · Ankelrotasjonar 10 kvar retning<br><br>'+
-        '<b>Aktivering:</b> Glute-bridge 3 sek pause 3×10 · Thorax-rotasjon sitjande 10 kvar side'}
+        '90/90 hofterotasjon 8–10 min · Hip CARs 8 reps · Pigeon 2 min · Couch stretch 2 min<br>Hamstring PNF kontrakt-relax 3 reps · Piriformis/figure-4 2 min<br>Gastrocnemius 90 sek · Soleus 90 sek · Ankelrotasjonar<br>Glute-bridge med 3 sek pause 3×10 · Thorax-rotasjon 10 kvar side'}
     ]},
     6:{type:'trening',short:'Rytmeøkt',dot:'dot-t',blocks:[
       {cls:'tb-rytme',lbl:'Rytmeøkt (11:00–13:00)',html:
