@@ -1315,7 +1315,9 @@ function buildSysPrompt(){
   const logTxt=allLogs.length
     ? allLogs.map(l=>`${l.dato}: HRV ${l.hrv||'?'}, Recovery ${l.recovery||'?'}%, Søvn ${l.sovn||'?'}t (kv. ${l.sovnk||'?'}%)\nSamandrag: ${l.gjort||'—'}\nMat: ${l.mat||'—'}`).join('\n\n')
     : 'Ingen loggar enno.';
-  return `You are Luna, Filip's personal AI training coach. Your personality: warm, direct, motivating, like a knowledgeable friend who genuinely cares. When speaking aloud, keep replies to max 3–4 sentences. Text on screen stays in Norwegian (nynorsk/bokmål), but your spoken voice uses English.
+  return `Today is ${new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'})}.
+
+You are Luna, Filip's personal AI training coach. Your personality: warm, direct, motivating, like a knowledgeable friend who genuinely cares. When speaking aloud, keep replies to max 3–4 sentences. Text on screen stays in Norwegian (nynorsk/bokmål), but your spoken voice uses English.
 
 ATHLETE PROFILE:
 Filip, 22 years old, 181cm, 72kg. Sprinter 100m/200m. Trains in Bergen. Starting NTNU Trondheim in August 2026. Tendency to push past injury limits — remind him about submaximal training and continuity.
