@@ -211,6 +211,38 @@ textarea.fi{resize:vertical;min-height:54px;}
 .empty{text-align:center;padding:28px;color:var(--text2);font-size:12px;}
 .sh{font-size:13px;font-weight:700;margin-bottom:12px;}
 .msg-ok{font-size:12px;color:var(--green-text);margin-left:10px;}
+
+/* voice status bar */
+.voice-status{padding:7px 14px;font-size:12px;color:var(--text2);background:var(--bg3);border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px;}
+.voice-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;transition:background .2s;}
+.voice-dot.listening{background:#EF4444;}
+.voice-dot.speaking{background:#10B981;}
+
+/* mic button */
+.ai-mic{padding:8px 12px;background:var(--bg3);color:var(--text);border:0.5px solid var(--border2);border-radius:8px;font-size:16px;cursor:pointer;transition:all .15s;flex-shrink:0;}
+.ai-mic:hover{background:var(--border2);}
+.ai-mic.listening{background:#FEE2E2;border-color:#EF4444;animation:pulse-mic 1s ease-in-out infinite;}
+.ai-mic.speaking{background:#D1FAE5;border-color:#10B981;animation:pulse-mic 1.4s ease-in-out infinite;}
+@keyframes pulse-mic{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.35);}50%{box-shadow:0 0 0 7px rgba(239,68,68,0);}}
+.ai-mic.speaking{animation-name:pulse-mic-green;}
+@keyframes pulse-mic-green{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.35);}50%{box-shadow:0 0 0 7px rgba(16,185,129,0);}}
+
+/* shopping list */
+.shop-wrap{margin-top:14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;}
+.shop-h{padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--amber-bg);color:var(--amber-text);border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.shop-items{padding:10px 14px;}
+.shop-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+.shop-item:last-child{border-bottom:none;}
+.shop-item.done span{text-decoration:line-through;opacity:.5;}
+.shop-add{display:flex;gap:8px;padding:10px 14px;border-top:0.5px solid var(--border);}
+.shop-input{flex:1;padding:7px 10px;border:0.5px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text);font-size:13px;font-family:inherit;}
+.shop-input:focus{outline:none;border-color:var(--purple);}
+
+/* voice settings */
+.vs-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.vs-lbl{font-size:12px;color:var(--text2);min-width:80px;}
+.vs-val{font-size:12px;color:var(--text);min-width:30px;}
+input[type=range].vs-slider{flex:1;accent-color:var(--purple);}
 </style>
 </head>
 <body>
@@ -226,7 +258,7 @@ textarea.fi{resize:vertical;min-height:54px;}
   <button class="tab"     data-v="plan"     onclick="nav(this)">Sesongplan</button>
   <button class="tab"     data-v="kost"     onclick="nav(this)">Kostplan</button>
   <button class="tab"     data-v="logg"     onclick="nav(this)">Logg</button>
-  <button class="tab"     data-v="ai"       onclick="nav(this)">AI-coach</button>
+  <button class="tab"     data-v="ai"       onclick="nav(this)">Luna 🌙</button>
   <button class="tab"     data-v="settings" onclick="nav(this)">⚙️</button>
 </div>
 
@@ -310,10 +342,27 @@ textarea.fi{resize:vertical;min-height:54px;}
   </div>
   <div id="aiChat" style="display:none">
     <div class="ai-wrap">
+      <div class="voice-status" id="voiceStatus">
+        <div class="voice-dot" id="voiceDot"></div>
+        <span id="voiceStatusTxt">Tap 🎙️ to talk to Luna</span>
+      </div>
       <div class="ai-msgs" id="aiMsgs"></div>
       <div class="ai-in">
         <textarea class="ai-ta" id="aiIn" placeholder="Spør om trening, form, kosthold... (Enter = send, Shift+Enter = ny linje)"></textarea>
+        <button class="ai-mic" id="aiMicBtn" onclick="toggleVoice()" title="Talk to Luna">🎙️</button>
         <button class="ai-send" id="aiSendBtn" onclick="sendAI()">Send</button>
+      </div>
+    </div>
+    <!-- Shopping list -->
+    <div class="shop-wrap" id="shopWrap">
+      <div class="shop-h">
+        <span>🛒 Handleliste</span>
+        <button class="btn btn-sec" style="font-size:11px;padding:3px 8px" onclick="clearDoneItems()">Fjern ferdig</button>
+      </div>
+      <div class="shop-items" id="shopItems"></div>
+      <div class="shop-add">
+        <input class="shop-input" id="shopInput" placeholder="Legg til vare..." onkeydown="if(event.key==='Enter')addShopItem()">
+        <button class="btn btn-dark" style="font-size:12px;padding:7px 12px" onclick="addShopItem()">+</button>
       </div>
     </div>
   </div>
@@ -376,6 +425,34 @@ textarea.fi{resize:vertical;min-height:54px;}
   </div>
 
   <div class="sc">
+    <div class="sc-h">Luna — Stemmeinnstillingar</div>
+    <div class="fg" style="margin-bottom:10px">
+      <label class="fl">Stemme</label>
+      <select class="fi" id="voiceSelect" style="font-size:12px" onchange="saveVoiceSettings()"></select>
+    </div>
+    <div class="vs-row">
+      <span class="vs-lbl">Tempo</span>
+      <input type="range" class="vs-slider" id="voiceRate" min="0.6" max="1.6" step="0.05" value="0.95" oninput="document.getElementById('voiceRateVal').textContent=this.value;saveVoiceSettings()">
+      <span class="vs-val" id="voiceRateVal">0.95</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-lbl">Toneleie</span>
+      <input type="range" class="vs-slider" id="voicePitch" min="0.5" max="1.8" step="0.05" value="1.05" oninput="document.getElementById('voicePitchVal').textContent=this.value;saveVoiceSettings()">
+      <span class="vs-val" id="voicePitchVal">1.05</span>
+    </div>
+    <div class="vs-row" style="margin-bottom:14px">
+      <span class="vs-lbl">Auto-snakk</span>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+        <input type="checkbox" id="voiceAutoSpeak" onchange="saveVoiceSettings()" checked>
+        <span style="font-size:12px;color:var(--text2)">Luna snakkar alle svar høgt</span>
+      </label>
+    </div>
+    <div class="brow">
+      <button class="btn btn-sec" onclick="testVoice()">Test stemme</button>
+    </div>
+  </div>
+
+  <div class="sc">
     <div class="sc-h">Farlege val</div>
     <p class="sc-note">Sletting kan ikkje angrast.</p>
     <div class="brow">
@@ -431,9 +508,25 @@ async function fetchCalendarEvents(){
 function googleLogin(){
   const cid=localStorage.getItem('filip_gcal_client_id')||'';
   if(!cid){alert('Legg inn Google Calendar Client ID i innstillingar fyrst.');return;}
-  const scope='https://www.googleapis.com/auth/calendar.readonly';
+  const scope='https://www.googleapis.com/auth/calendar';
   const uri=window.location.href.split('?')[0].split('#')[0];
   window.location.href=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${cid}&redirect_uri=${encodeURIComponent(uri)}&response_type=token&scope=${encodeURIComponent(scope)}`;
+}
+
+async function createCalendarEvent(summary, start, end){
+  const token=localStorage.getItem('filip_gcal_token');
+  if(!token){console.warn('No Google Calendar token — cannot create event');return;}
+  try{
+    const body={summary, start:{dateTime:start,timeZone:'Europe/Oslo'}, end:{dateTime:end,timeZone:'Europe/Oslo'}};
+    const res=await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events',{
+      method:'POST',
+      headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    const data=await res.json();
+    if(data.id) console.log('Calendar event created:',data.htmlLink);
+    else console.warn('Calendar error:',data.error?.message);
+  }catch(e){console.warn('createCalendarEvent error:',e);}
 }
 
 // Fang opp OAuth token etter redirect
@@ -1222,30 +1315,40 @@ function buildSysPrompt(){
   const logTxt=allLogs.length
     ? allLogs.map(l=>`${l.dato}: HRV ${l.hrv||'?'}, Recovery ${l.recovery||'?'}%, Søvn ${l.sovn||'?'}t (kv. ${l.sovnk||'?'}%)\nSamandrag: ${l.gjort||'—'}\nMat: ${l.mat||'—'}`).join('\n\n')
     : 'Ingen loggar enno.';
-  return `Du er ein personleg AI-treningscoach for Filip. Svar på norsk (nynorsk eller bokmål). Ver direkte og konkret.
+  return `You are Luna, Filip's personal AI training coach. Your personality: warm, direct, motivating, like a knowledgeable friend who genuinely cares. When speaking aloud, keep replies to max 3–4 sentences. Text on screen stays in Norwegian (nynorsk/bokmål), but your spoken voice uses English.
 
-UTØVARPROFIL:
-Filip, 22 år, 181cm, 72kg. Sprinter 100m/200m. Trenar i Bergen. Startar på NTNU Trondheim i august 2026. Tendens til å pirke borti grensa ved skade — minn om submaksimal trening og kontinuitet.
+ATHLETE PROFILE:
+Filip, 22 years old, 181cm, 72kg. Sprinter 100m/200m. Trains in Bergen. Starting NTNU Trondheim in August 2026. Tendency to push past injury limits — remind him about submaximal training and continuity.
 
-TRENINGSFILOSOFI: Submaksimal, rytme, kontinuitet. Aldri ofre neste økt for denne.
+TRAINING PHILOSOPHY: Submaximal, rhythm, continuity. Never sacrifice the next session for this one.
 
-TRENINGSSTRUKTUR (ukentleg):
-• Måndag 18:30: Core + overkropp (dips, benkpress, skulderpress) + 15 min mobilitet
-• Tysdag 18:30: Fartøkt — flying 30m (3–4 reps, 8–9 min pause). Kamel frå 5. mai: 15m aks + 20m flyt + 20m reaktivering, MAKS 2 reps, 10 min pause.
-• Onsdag 18:30: Styrke — Smith SL-squat, heelboks hip ext, isometrisk calf raise. Periodisering: intro 3×5 (apr) → bygg 4×5 → topp 4×6 (mai) → ned 3×4-5 → vedlikehald 2×3-4
-• Torsdag 18:30: Blokkøkt — 10m reaksjon, 20m driv, 30m full aks. Hoppetau inne til 17. mai. Hekkedrills. Spenst.
-• Fredag: Full mobilitet 30–40 min
-• Laurdag 11:00: Rytmeøkt piggsko (pyramide ned eller nedtrapp)
-• Søndag: Kvile
+WEEKLY TRAINING STRUCTURE:
+• Monday 18:30: Upper body (dips, bench, pull-ups) + 15 min mobility
+• Tuesday 18:30: Speed session — flying 30m (3–4 reps, 8–9 min rest). Camel from May 5: 15m acc + 20m float + 20m reactivation, MAX 2 reps, 10 min rest.
+• Wednesday 18:30: Strength — Smith SL-squat, heel-box hip ext, isometric calf raise. Periodisation: intro 3×5 (Apr) → build 4×5 → peak 4×6 (May) → taper 3×4–5 → maintenance 2×3–4
+• Thursday 18:30: Block session — 10m reaction, 20m drive, 30m full acc. Jump rope indoors until 17 May. Hurdle drills. Plyos.
+• Friday: Full mobility 30–40 min
+• Saturday 11:00: Rhythm session spikes (pyramid or step-down)
+• Sunday: Rest
 
-STEVNEPLAN (UTAN Next Call Bislett):
-28.mai TMG Bergen 100m · 5.jun Framo-lekene 400m+200m · 20.jun Lillehammerlekene · 24.jun Boysen Memorial 200m · 8.jul Joensuu 200m · 12.jul Tampere 100m · 23-25.jul 🏆 NM Trondheim (HOVUDMÅL 1) · 22.aug NM Stafetter · 23.aug Mjøssprinten · 28-30.aug 🏆 Jr. NM Oslo (HOVUDMÅL 2)
+RACE SCHEDULE (NO Next Call Bislett):
+28 May TMG Bergen 100m · 5 Jun Framo-lekene 400m+200m · 20 Jun Lillehammerlekene · 24 Jun Boysen Memorial 200m · 8 Jul Joensuu 200m · 12 Jul Tampere 100m · 23–25 Jul 🏆 NM Trondheim (MAIN GOAL 1) · 22 Aug NM Stafetter · 23 Aug Mjøssprinten · 28–30 Aug 🏆 Jr. NM Oslo (MAIN GOAL 2)
 
-KOSTPLAN (~2300–2600 kcal, 180–215g protein):
-Man: kyllingwok · Tys: pasta bolognese · Ons: kyllinggryte · Tor: biff m/potet · Fre: alltid taco · Lør: alltid biff 220g · Søn: tandori (odde veker) / kjøttkaker (partalsveker)
-Tilskot: kalsium+omega3+folsyre+D morgon · C-vit 30min før trening · magnesium+jern+C kveld
+COMPETITION PERIOD from 2026-06-20: Monday = minimal upper body (Dips 2×5, Pullups 2×6) + explosive activation (Smith SL-squat 2×3, Heelboks 2×5, Calf raise 2×4s×3). Wednesday = only explosive activation, listen to body, skip if too tired after race.
 
-SISTE LOGGAR (filip_logs + sjurlog, siste 15):
+NUTRITION PLAN (~2300–2600 kcal, 180–215g protein):
+Mon: chicken wok · Tue: pasta bolognese · Wed: chicken stew · Thu: steak + potato · Fri: always tacos · Sat: always steak 220g · Sun: tandoori (odd weeks) / meatballs (even weeks)
+Supplements: calcium+omega3+folate+D morning · C-vit 30min pre-training · magnesium+iron+C evening
+
+JSON ACTIONS — when Filip asks you to add a calendar event, respond with a JSON block on its own line:
+{"action":"add_calendar","summary":"Event name","start":"2026-05-28T10:00:00","end":"2026-05-28T11:00:00"}
+
+When Filip asks you to add something to the shopping list, respond with:
+{"action":"add_shopping","items":["item1","item2"]}
+
+Include the JSON silently in your message — the app will parse it automatically.
+
+RECENT LOGS (filip_logs + sjurlog, last 15):
 ${logTxt}`;
 }
 
@@ -1253,7 +1356,9 @@ function initAI(){
   const key=localStorage.getItem('filip_claude_key');
   document.getElementById('aiSetup').style.display=key?'none':'block';
   document.getElementById('aiChat').style.display=key?'block':'none';
-  if(key&&chatHist.length===0) addAIMsg('assistant','Hei Filip! Eg kjenner treningsplanen, kostplanen, stevneplanen og logghistorikken din. Spør om kva som helst — form, ernæring, taktikk, restitusjon. 💪');
+  if(key&&chatHist.length===0){
+    addAIMsg('assistant','Hei Filip! Eg er Luna — eg kjenner treningsplanen, kostplanen, stevneplanen og logghistorikken din. Trykk 🎙️ for å snakke med meg, eller skriv her. Spør om kva som helst! 🌙');
+  }
 }
 
 function saveKeyAndInit(){
@@ -1312,13 +1417,38 @@ async function sendAI(){
     if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${res.status}`);}
     const data=await res.json();
     const reply=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Beklagar, fekk ikkje svar.';
-    addAIMsg('assistant',reply);
+    // Parse JSON actions embedded in the reply
+    const cleanReply = parseAndHandleActions(reply);
+    addAIMsg('assistant',cleanReply);
+    // Speak reply if auto-speak enabled
+    const autoSpeak = document.getElementById('voiceAutoSpeak')?.checked ?? true;
+    if(autoSpeak) lunaSpeak(cleanReply);
   }catch(e){
     loadEl.remove();
     addAIMsg('assistant',`Feil: ${e.message}`);
   }finally{
     btn.disabled=false; btn.textContent='Send';
   }
+}
+
+// Parse JSON action commands from Luna's reply, execute them, return clean text
+function parseAndHandleActions(text){
+  let clean = text;
+  const jsonRegex = /\{[^{}]*"action"\s*:\s*"[^"]+[^{}]*\}/g;
+  const matches = text.match(jsonRegex)||[];
+  for(const m of matches){
+    try{
+      const obj = JSON.parse(m);
+      if(obj.action==='add_calendar'){
+        createCalendarEvent(obj.summary||'Hendelse',obj.start,obj.end);
+      } else if(obj.action==='add_shopping' && Array.isArray(obj.items)){
+        obj.items.forEach(it=>addShopItemText(it));
+        renderShopList();
+      }
+      clean = clean.replace(m,'').trim();
+    }catch(e){}
+  }
+  return clean || text;
 }
 
 // ============================================================
@@ -1511,8 +1641,8 @@ function nav(btn){
   const v=btn.dataset.v;
   document.getElementById('v-'+v).classList.add('on');
   if(v==='logg'){renderLogHistory();}
-  if(v==='ai'){initAI();}
-  if(v==='settings'){renderKeyStatus();}
+  if(v==='ai'){initAI();renderShopList();}
+  if(v==='settings'){renderKeyStatus();renderWeatherKeyStatus();renderGcalStatus();populateVoiceSelector();loadVoiceSettings();}
   if(v==='plan'){renderWeek();}
 }
 
@@ -1529,7 +1659,163 @@ document.addEventListener('DOMContentLoaded',()=>{
     this.style.height=Math.min(this.scrollHeight,120)+'px';
   });
   document.getElementById('lf-date').value=toDS(new Date());
+  loadVoiceSettings();
+  // Populate voices (may need event in some browsers)
+  if(window.speechSynthesis){
+    window.speechSynthesis.onvoiceschanged = populateVoiceSelector;
+    populateVoiceSelector();
+  }
 });
+
+// ============================================================
+// VOICE ASSISTANT (Web Speech API)
+// ============================================================
+let recognition = null;
+let isSpeaking = false;
+
+function setVoiceStatus(state, txt){
+  const dot = document.getElementById('voiceDot');
+  const statusTxt = document.getElementById('voiceStatusTxt');
+  const micBtn = document.getElementById('aiMicBtn');
+  if(!dot||!statusTxt) return;
+  dot.className = 'voice-dot' + (state ? ' '+state : '');
+  statusTxt.textContent = txt;
+  if(micBtn){
+    micBtn.className = 'ai-mic' + (state ? ' '+state : '');
+  }
+}
+
+function lunaSpeak(text){
+  if(!window.speechSynthesis) return;
+  // Strip markdown and JSON
+  let clean = text.replace(/\{[^{}]*"action"[^{}]*\}/g,'')
+    .replace(/[*_`#]/g,'').replace(/\n+/g,' ').trim();
+  if(!clean) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.lang = 'en-US';
+  const rate = parseFloat(localStorage.getItem('luna_rate')||'0.95');
+  const pitch = parseFloat(localStorage.getItem('luna_pitch')||'1.05');
+  utter.rate = rate;
+  utter.pitch = pitch;
+  // Pick saved voice
+  const voices = window.speechSynthesis.getVoices();
+  const savedVoice = localStorage.getItem('luna_voice');
+  if(savedVoice){
+    const v = voices.find(v=>v.name===savedVoice);
+    if(v) utter.voice = v;
+  } else {
+    // Default: first en-US voice
+    const v = voices.find(v=>v.lang==='en-US')||voices.find(v=>v.lang.startsWith('en'));
+    if(v) utter.voice = v;
+  }
+  utter.onstart = ()=>{ isSpeaking=true; setVoiceStatus('speaking','Luna is speaking…'); };
+  utter.onend = ()=>{ isSpeaking=false; setVoiceStatus('','Tap 🎙️ to talk to Luna'); };
+  utter.onerror = ()=>{ isSpeaking=false; setVoiceStatus('','Tap 🎙️ to talk to Luna'); };
+  window.speechSynthesis.speak(utter);
+}
+
+function toggleVoice(){
+  if(isSpeaking){ window.speechSynthesis.cancel(); isSpeaking=false; setVoiceStatus('','Tap 🎙️ to talk to Luna'); return; }
+  const SRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SRec){ alert('Voice recognition not supported in this browser.'); return; }
+  if(recognition && recognition._running){ recognition.stop(); return; }
+  recognition = new SRec();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  recognition._running = true;
+  setVoiceStatus('listening','Listening…');
+  recognition.onresult = e => {
+    const transcript = e.results[0][0].transcript;
+    document.getElementById('aiIn').value = transcript;
+    setVoiceStatus('','Processing…');
+    sendAI();
+  };
+  recognition.onerror = e => { recognition._running=false; setVoiceStatus('','Tap 🎙️ to talk to Luna'); };
+  recognition.onend = () => { recognition._running=false; if(!isSpeaking) setVoiceStatus('','Tap 🎙️ to talk to Luna'); };
+  recognition.start();
+}
+
+// ============================================================
+// SHOPPING LIST
+// ============================================================
+function getShopList(){ try{return JSON.parse(localStorage.getItem('luna_shoplist')||'[]');}catch(e){return[];} }
+function saveShopList(arr){ localStorage.setItem('luna_shoplist',JSON.stringify(arr)); }
+
+function addShopItemText(txt){
+  const t = (txt||'').trim(); if(!t) return;
+  const list = getShopList();
+  list.push({text:t, done:false, id:Date.now()+Math.random()});
+  saveShopList(list);
+}
+
+function addShopItem(){
+  const inp = document.getElementById('shopInput');
+  const t = inp.value.trim(); if(!t) return;
+  addShopItemText(t);
+  inp.value='';
+  renderShopList();
+}
+
+function toggleShopItem(id){
+  const list = getShopList().map(it=>it.id===id?{...it,done:!it.done}:it);
+  saveShopList(list); renderShopList();
+}
+
+function clearDoneItems(){
+  saveShopList(getShopList().filter(it=>!it.done));
+  renderShopList();
+}
+
+function renderShopList(){
+  const el = document.getElementById('shopItems'); if(!el) return;
+  const list = getShopList();
+  if(!list.length){ el.innerHTML='<div class="empty" style="padding:14px">Ingen varer enno</div>'; return; }
+  el.innerHTML = list.map(it=>`
+    <div class="shop-item${it.done?' done':''}">
+      <input type="checkbox" ${it.done?'checked':''} onchange="toggleShopItem(${it.id})">
+      <span>${esc(it.text)}</span>
+    </div>`).join('');
+}
+
+// ============================================================
+// VOICE SETTINGS
+// ============================================================
+function populateVoiceSelector(){
+  const sel = document.getElementById('voiceSelect'); if(!sel) return;
+  const voices = window.speechSynthesis.getVoices();
+  const enVoices = voices.filter(v=>v.lang.startsWith('en'));
+  const saved = localStorage.getItem('luna_voice')||'';
+  sel.innerHTML = enVoices.map(v=>`<option value="${v.name}"${v.name===saved?' selected':''}>${v.name} (${v.lang})</option>`).join('');
+  if(!sel.value && enVoices.length) sel.value = enVoices[0].name;
+}
+
+function saveVoiceSettings(){
+  const sel = document.getElementById('voiceSelect');
+  if(sel && sel.value) localStorage.setItem('luna_voice', sel.value);
+  const rate = document.getElementById('voiceRate');
+  if(rate) localStorage.setItem('luna_rate', rate.value);
+  const pitch = document.getElementById('voicePitch');
+  if(pitch) localStorage.setItem('luna_pitch', pitch.value);
+  const auto = document.getElementById('voiceAutoSpeak');
+  if(auto) localStorage.setItem('luna_autospeak', auto.checked?'true':'false');
+}
+
+function loadVoiceSettings(){
+  const rate = parseFloat(localStorage.getItem('luna_rate')||'0.95');
+  const pitch = parseFloat(localStorage.getItem('luna_pitch')||'1.05');
+  const rateEl = document.getElementById('voiceRate');
+  const pitchEl = document.getElementById('voicePitch');
+  if(rateEl){ rateEl.value=rate; document.getElementById('voiceRateVal').textContent=rate; }
+  if(pitchEl){ pitchEl.value=pitch; document.getElementById('voicePitchVal').textContent=pitch; }
+  const autoEl = document.getElementById('voiceAutoSpeak');
+  if(autoEl) autoEl.checked = (localStorage.getItem('luna_autospeak')!=='false');
+}
+
+function testVoice(){
+  lunaSpeak("Hey Filip! Luna here. Ready when you are.");
+}
 
 // ============================================================
 // MORGONBRIEFING
@@ -1552,11 +1838,11 @@ async function morningBriefing(){
   const trainText=document.getElementById('tdTrainB')?.innerText?.slice(0,400)||'';
   const kostText=document.getElementById('tdKostB')?.innerText?.slice(0,200)||'';
 
-  const prompt=`Gi ein kort og engasjerande god morgon-hilsen til Filip. Bruk ALDRI meir enn 4–5 setningar totalt.
-Inkluder: 1) Personleg hilsen med namn. 2) Kort om dagens trening (intensitet og fokus). 3) Eitt kosthaldsråd for dagen.${weatherText?' 4) '+weatherText:''}${calText?' 5) Relevante kalender-hendingar.':''}
-Ver positiv, direkte og coach-aktig. Snakk nynorsk.
-TRENINGSDATA: ${trainText}
-KOSTPLAN: ${kostText}${calText}`;
+  const prompt=`Give Filip a short, energising good morning briefing. NEVER exceed 4–5 sentences total. Speak in English.
+Include: 1) Personal greeting with name. 2) Today's training — intensity and focus. 3) One nutrition tip for the day.${weatherText?' 4) Weather update: '+weatherText:''}${calText?' 5) Relevant calendar events.':''}
+Be positive, direct and coach-like. Keep it punchy — Filip is about to start his day.
+TRAINING DATA: ${trainText}
+NUTRITION PLAN: ${kostText}${calText}`;
 
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -1582,6 +1868,7 @@ renderKost();
 renderKeyStatus();
 renderWeatherKeyStatus();
 renderGcalStatus();
+renderShopList();
 setTimeout(morningBriefing,1500);
 </script>
 </body>
